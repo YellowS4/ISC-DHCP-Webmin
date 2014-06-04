@@ -1,8 +1,6 @@
 <article>
 <?php
-		include 'inc/network.php';
-	// $connex=connexionBDD();
-	
+		require 'inc/network.php';
 		if(is_install()){//On verifie que le dhcp est installé
 			echo 'serveur DHCP: Installé <img src="/RT/Projet34/Florian/images/vert.png" class="icon"><br />';
 		}else{
