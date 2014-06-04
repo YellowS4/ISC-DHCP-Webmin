@@ -2,11 +2,7 @@
 <?php
 //Includes
 include 'inc/fonctionsBDD.php';
-<<<<<<< HEAD
 $connex=connexionBDD();
-=======
-$connexionBDD=connexionBDD();
->>>>>>> 07b672b0320b83dd823a0adfd7f23e449884b7ec
 include 'inc/network.php';
 //Constantes
 define("NB_CONF_PAGE","2");
@@ -26,11 +22,7 @@ if(isset($_GET['id']) && $_GET['id']>=0){
 		if($_POST['default']=="true"){
 			$resultats=$connex->query("SELECT id FROM dhcp_test WHERE conf_default=TRUE");
 			if($resultats->rowCount()>0){
-<<<<<<< HEAD
 				$erreur.="Impossible, il existe d?j? une configuration par d?faut\n";
-=======
-				$erreur.="Impossible, il existe d�j� une configuration par d�faut\n";
->>>>>>> 07b672b0320b83dd823a0adfd7f23e449884b7ec
 			}
 		}
 		if(isset($erreur) && $erreur!=""){
@@ -52,11 +44,7 @@ if(isset($_GET['id']) && $_GET['id']>=0){
 		}
 		$resultats=$connex->query("SELECT conf_contenu, interface, nom_conf, date_creation, conf_default, conf_actuelle  FROM dhcp_test LIMIT ".NB_CONF_PAGE." OFFSET ".$id*NB_CONF_PAGE."");
 	?>
-<<<<<<< HEAD
 	Afficher seulement: <label>Tous <input type="checkbox" id="selection_conf" name="affichage[]" value="Tous" onclick="selection('conf')" checked="checked"></label> <label>La configuration par defaut <input type="checkbox" id="selection_default" name="affichage[]" value="Configuration_d?faut" onclick="selection('default')"></label> <label>La configuration actuelle <input type="checkbox" id="selection_actuelle" name="affichage[]" value="Configuration_actuelle" onclick="selection('actuelle')"></label> Concernant les interfaces:.... <br />
-=======
-	Afficher seulement: <label>Tous <input type="checkbox" id="selection_conf" name="affichage[]" value="Tous" onclick="selection('conf')" checked="checked"></label> <label>La configuration par defaut <input type="checkbox" id="selection_default" name="affichage[]" value="Configuration_d�faut" onclick="selection('default')"></label> <label>La configuration actuelle <input type="checkbox" id="selection_actuelle" name="affichage[]" value="Configuration_actuelle" onclick="selection('actuelle')"></label> Concernant les interfaces:.... <br />
->>>>>>> 07b672b0320b83dd823a0adfd7f23e449884b7ec
 	<?php	
 		$i=0;
 		foreach ($resultats as $row) {	
@@ -87,12 +75,8 @@ if(isset($_GET['id']) && $_GET['id']>=0){
 								$select="";
 								if($row['interface']==$nom_inter){
 									$select='selected="selected"';
-								}
-<<<<<<< HEAD
+								}			
 								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse d?finie)</option>';
-=======
-								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse d�finie)</option>';
->>>>>>> 07b672b0320b83dd823a0adfd7f23e449884b7ec
 							}
 							
 						} 
