@@ -21,6 +21,7 @@
       if($_POST['pseudo']==="azerty" && $_POST['pass']==="1234"){
 		$_SESSION['user']='test user';
 		$_SESSION['grade']=4;
+		header("refresh: 0;");
 		
       }
       else{
