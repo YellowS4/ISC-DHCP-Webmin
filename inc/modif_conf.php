@@ -2,6 +2,7 @@
 <?php
 //Includes
 include 'inc/fonctionsBDD.php';
+$connexionBDD=connexionBDD();
 include 'inc/network.php';
 //Constantes
 define("NB_CONF_PAGE","2");
@@ -21,7 +22,7 @@ if(isset($_GET['id'])){
 		if($_POST['default']=="true"){
 			$resultats=$connex->query("SELECT id FROM dhcp_test WHERE conf_default=TRUE");
 			if($resultats->rowCount()>0){
-				$erreur.="Impossible, il existe déjà une configuration par défaut\n";
+				$erreur.="Impossible, il existe dï¿½jï¿½ une configuration par dï¿½faut\n";
 			}
 		}
 		if(isset($erreur) && $erreur!=""){
@@ -43,7 +44,7 @@ if(isset($_GET['id'])){
 		}
 		$resultats=$connex->query("SELECT conf_contenu, interface, nom_conf, date_creation, conf_default, conf_actuelle  FROM dhcp_test LIMIT ".NB_CONF_PAGE." OFFSET ".$id*NB_CONF_PAGE."");
 	?>
-	Afficher seulement: <label>Tous <input type="checkbox" id="selection_conf" name="affichage[]" value="Tous" onclick="selection('conf')" checked="checked"></label> <label>La configuration par defaut <input type="checkbox" id="selection_default" name="affichage[]" value="Configuration_défaut" onclick="selection('default')"></label> <label>La configuration actuelle <input type="checkbox" id="selection_actuelle" name="affichage[]" value="Configuration_actuelle" onclick="selection('actuelle')"></label> Concernant les interfaces:.... <br />
+	Afficher seulement: <label>Tous <input type="checkbox" id="selection_conf" name="affichage[]" value="Tous" onclick="selection('conf')" checked="checked"></label> <label>La configuration par defaut <input type="checkbox" id="selection_default" name="affichage[]" value="Configuration_dï¿½faut" onclick="selection('default')"></label> <label>La configuration actuelle <input type="checkbox" id="selection_actuelle" name="affichage[]" value="Configuration_actuelle" onclick="selection('actuelle')"></label> Concernant les interfaces:.... <br />
 	<?php	
 		$i=0;
 		foreach ($resultats as $row) {	
@@ -75,7 +76,7 @@ if(isset($_GET['id'])){
 								if($row['interface']==$nom_inter){
 									$select='selected="selected"';
 								}
-								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse définie)</option>';
+								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse dï¿½finie)</option>';
 							}
 							
 						} 
