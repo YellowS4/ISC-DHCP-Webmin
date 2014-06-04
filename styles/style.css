@@ -110,13 +110,6 @@ form#search{
   display:table;
 }
 
-.echec{
-  font-color:red;
-}
-
-.reussi{
-  font-color:green;
-}
 r-collapse:collapse;
   width: 100%;
 }
