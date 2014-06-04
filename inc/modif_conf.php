@@ -1,4 +1,8 @@
+<article>
 <?php
+//Includes
+include 'inc/fonctionsBDD.php';
+include 'inc/network.php';
 //Constantes
 define("NB_CONF_PAGE","2");
 define("NB_PAGE","2");
@@ -113,3 +117,4 @@ if(isset($_GET['id'])){
 		//FIN ESSAI DE PAGINATION
 	}
 ?>
+</article>

@@ -1,6 +1,6 @@
 <article>
 <?php
-	// include './includes/fonctionsBDD.php';
+		include 'inc/network.php';
 	// $connex=connexionBDD();
 	
 		if(is_install()){//On verifie que le dhcp est installé
