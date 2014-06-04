@@ -6,7 +6,7 @@ function connexionBDD(){
 	$PARAM_port='5432';
 	$PARAM_nom_bd='projet34'; // le nom de votre base de données
 	$PARAM_utilisateur='projet34'; // nom d'utilisateur pour se connecter
-	$PARAM_mot_passe='GXnyxX'; // mot de passe de l'utilisateur pour se connecter
+	$PARAM_mot_passe='*****'; // mot de passe de l'utilisateur pour se connecter
 	
 	try
 	{
