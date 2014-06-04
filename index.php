@@ -34,7 +34,6 @@
   else{
   	include 'inc/dhcp.php';
     include 'inc/head.php';
-	$connex=connexionBDD();
 	
     if( isset($_GET['debug']) ){ $debug=true; }
     if( isset($_GET['page']) ){ $page=$_GET['page'];}
