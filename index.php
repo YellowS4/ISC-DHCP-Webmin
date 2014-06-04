@@ -35,11 +35,10 @@ function redir_auth($err){
   }
   else{
   	include 'inc/dhcp.php';
-    include 'inc/head.php';
-	
     if( isset($_GET['debug']) ){ $debug=true; }
     if( isset($_GET['page']) ){ $page=$_GET['page'];}
     else{ $page='home'; }
+	include 'inc/head.php';
     switch( $page ){
       case 'home':
 		print 'ceci est la page d\'accueil';
