@@ -1,15 +1,16 @@
 <?php
   session_start();
-  function redir_auth($err){
+function redir_auth($err){
+  if($err!=null){$_SESSION['erreur']=$err;}
   header('HTTP/1.1 307 Temporary Redirect');
-  header('Location: auth.php'.($err!='')?'?erreur='.$err:'');
+  header('Location: auth.php');
   header('Status: 307 Temporary Redirect');
   header('Content-Type: text/html; charset=UTF-8');
   print '<!DOCTYPE html>
   <html>
     <head>
       <meta charset="utf-8">
-      <meta http-equiv="refresh" content="0; url=auth.php'.(($err!='')?'?erreur='.$err:'').'">
+      <meta http-equiv="refresh" content="0; url=auth.php">
     </head>
     <body>
       Vous devez être authentifié!

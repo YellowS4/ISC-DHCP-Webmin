@@ -1,4 +1,5 @@
 <?php
+  //fonction pour transformer un entier 32bits en IP notée en décimal pointé
   function int2decPointIP($ip){
     $out='';
     $mask=Array(0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
@@ -10,6 +11,7 @@
     return $out;
   }
 
+  //transforme une ip écrite en décimal pointé/hexa/tableau de quatres octets en entier
   function IP2int($addr){
     print $debug?"IN IP2int: ":'';
     switch(gettype($addr)){
@@ -52,14 +54,9 @@ function get_network(){
   $interfaces=Array();
   $if_count=0;
   foreach($return as $line){
-<<<<<<< HEAD
-    if( preg_match('@^[a-z]+\d?@',$line,$matches)){
+    if( preg_match('@^[a-z]+\d*@',$line,$matches)){
       $current_if=$matches[0];
       $interfaces[$current_if]=Array();
-=======
-    if( preg_match('@^[a-z]+\d@',$line,$matches)){
-      $current_if=$matches[0];
->>>>>>> 51835ea172b59f7bc1320a94a4120b8122268233
       $current_alias_v4=0;
       $current_alias_v6=0;
       $current_alias_v6_local=0;
@@ -101,6 +98,7 @@ function get_network(){
   return $interfaces;
 }
 
+//fonction pour tester si une addresse appartient à un subnet
 function addr_in_subnet($addr,$subnet,$mask){
     print $debug?"IN addr_in_subnet():":'';
     $addr = IP2int($addr);
