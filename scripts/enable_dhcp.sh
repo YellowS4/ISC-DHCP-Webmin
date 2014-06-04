@@ -1,0 +1,1 @@
+update-rc.d isc-dhcp-server enable
