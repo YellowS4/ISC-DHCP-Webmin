@@ -1,39 +1,48 @@
 <?php
+  
+  /*
+    Code par Jason Gantner
+  */
+  
   //fonction pour transformer un entier 32bits en IP notée en décimal pointé
   function int2decPointIP($ip){
     $out='';
     $mask=Array(0x000000ff,0x0000ff00,0x00ff0000,0xff000000);
+    //masques à appliquer à l'ip pour obtenir les octets un par un
     for($i=3;$i>=0;$i--){
-      $tmp=($ip&$mask[$i])>>(8*($i));
+      //parcour de l'entier 32bits
+      $tmp= ( $ip & $mask[$i] ) >> ( 8 * $i );
+      //on applique le masque et le décalage correspondant de façon à obtenir un entier sur 8bits
       $out .= ($tmp<0) ? 256+$tmp : $tmp;
+      //si le décalage est fait avec des 1 à la place des 0, on corrige
       if($i>0){$out.='.';}
+      //on ajoute le séparateur
     }
-    return $out;
+    return $out; //on renvoie la chaine contenant l'ipl'IP
   }
 
   //transforme une ip écrite en décimal pointé/hexa/tableau de quatres octets en entier
   function IP2int($addr){
-    print $debug?"IN IP2int: ":'';
     switch(gettype($addr)){
       case "integer":
+	//si on reçoit un entier, il n'y a rien à faire
 	$addri=$addr;
 	break;
       case "string";
+	//si c'est une chaine de caractères, il peut y avoir plusieurs possibilités
 	if(preg_match("@[0-9a-fA-F]{8}@",$addr)){
-	  $addri=hexdec($addr);
-	  print $debug?"hexIP 2 intIP<br>":'';
+	  //cas où c'est une écriture héxadécimale
+	  $addri=hexdec($addr);//simple conversion d'héxadécimal à décimal
 	  break;
 	}
 	else{
-	  $tmp=explode('.',$addr);
-	  if(count($tmp)!=4){
+	  $tmp=explode('.',$addr);// on estime que c'est une notation décimal pointée, on sépare donc chaque octet.
+	  if(count($tmp)!=4){ //si il n'y a pas 4 éléments dans le tableau
 	    $addri=false;
-	    print $debug?"str_split error<br/>":'';
 	    break;
 	  }
 	  else{
 	    $addr=$tmp;
-	    print $debug?"decPointIP 2 arrayIP<br>":'';
 	  }
 	}
       case "array":
@@ -49,6 +58,7 @@
     return $addri;
   }
   
+  //fonction permettant d'obtenir des informations sur les interfaces du serveurs et les réseaux connéctés
 function get_network(){
   exec("/sbin/ifconfig -a 2>&1",$return);
   $interfaces=Array();
@@ -82,7 +92,7 @@ function get_network(){
     }
   }
   foreach(Array_keys($interfaces) as $if){
-    if(isset($interfaces[$if]['IPv4_maskt'])){
+    if(isset($interfaces[$if]['IPv4_mask'])){
       foreach(Array_keys($interfaces[$if]['IPv4_addr']) as $i){
         $interfaces[$if]['IPv4_subnet'][$i] = int2decPointIP(IP2int($interfaces[$if]['IPv4_addr'][$i])&IP2int($interfaces[$if]['IPv4_mask'][$i]));
       }
