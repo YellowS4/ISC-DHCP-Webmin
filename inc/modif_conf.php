@@ -74,6 +74,49 @@ $manquant="";
 				//$resultats=$connex->exec("UPDATE dhcp_test SET conf_contenu='".$_POST['conf_contenu']."', interface='".$_POST['interface']."', nom_conf='".$_POST['nom']."', conf_default='".$_POST['default']."', conf_actuelle='".$_POST['actuelle']."' WHERE id='".$_POST['id']."'; ");
 			}
 		}
+	}elseif(isset($_POST['afficher_une_conf']) && $_POST['afficher_une_conf']==="ok"){//Pour afficher qu'une seul conf depuis l'affichage simple
+		$conf=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation, conf_default, conf_actuelle FROM dhcp_test WHERE id=".$_POST['conf'].";");
+		$row=$conf->fetch();
+		?>
+		<form method="POST" action=""> 
+				<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+				<span style="vertical-align:top;">fichier dhcpd.conf: </span><textarea name="conf_contenu" rows="20" cols="50"><?php echo $row['conf_contenu'];?></textarea><br />
+				interface:  <select name='interface'>
+				  <?php
+				  //On liste les interfaces
+					foreach ($nw as $nom_inter => $categories ) {//On boucle pour extraire toutes les interfaces $key= les nom des interfaces
+							if(is_array($categories) && $categories!=array()){//Si aucune info sur l'interface
+								foreach ($categories as $nom_categories => $info  ) { 
+									foreach ($info as  $value) { //On extrait les info des categories
+										if($nom_categories=="IPv4_addr"){//On ne prends que l'ip
+											$select="";
+											if($row['interface']==$nom_inter){
+												$select='selected="selected"';
+											}
+											print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' ('.$value.')</option>';
+										}
+									}
+								}
+							}else{
+								$select="";
+								if($row['interface']==$nom_inter){
+									$select='selected="selected"';
+								}			
+								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse d?finie)</option>';
+							}
+							
+						} 
+				  ?>
+				  </select>
+				  
+				nom de la configuration: <input type="text" name="nom" value="<?php echo $row['nom_conf'];?>"/><br />
+				configuration par defaut:  Oui <input type="radio" name="default" value="true" <?php if($row['conf_default']=="true"){ echo ' checked="checked"';}?>> Non: <input type="radio" name="default" value="false" <?php if($row['conf_default']!="true"){ echo ' checked="checked"';} ?>><br />
+				Appliquer la configuration (cela rempla�era la configuration actuelle):  Oui <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>> Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>><br />
+				<input type="submit" value="Ajouter" name="ajouter">
+				<input type="submit" value="Modifier" name="modifier">
+				<input type="submit" value="retour" name="">
+			</form>	
+			<?php
 	}elseif(isset($_POST['afficher_tout']) && $_POST['afficher_tout']==="Affichage détaillé"){
 	//On prends le nombre de configuration pour la pagination
 		$nb_conf_requete=$connex->query("SELECT conf_contenu, interface, nom_conf, date_creation, conf_default, conf_actuelle  FROM dhcp_test");
@@ -136,12 +179,6 @@ $manquant="";
 			</form>	
 		<?php
 		}
-		/*for($i=0; $i<$nb_pages; $i++){
-			//On selectionne tous les parametre dans l'url
-			preg_match('@(index.php?.*)&id+@',$_SERVER['REQUEST_URI'],$matches);
-				echo '<a href="'.$matches[1].'&id='.$i.'">'.$i.'</a>';
-		}*/
-		
 		//ESSAI DE PAGINATION
 		//On definit les pages a afficher
 			//Le debut
@@ -167,7 +204,7 @@ $manquant="";
 		print '<form method="POST" action=""><input type="submit" name="" value="Affichage simple"> </form>';
 	}else{
 		$liste_conf=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation, conf_default, conf_actuelle  FROM dhcp_test;");
-
+		print '<form method="POST" action="">';
 		print 'Listes configurations: <select name="conf">';
 				foreach($liste_conf as $ligne){
 					print '<option value="'.$ligne['id'].'">'.$ligne['date_creation'].'('.$ligne['nom_conf'].')</option>'."\n";
