@@ -26,7 +26,7 @@
 					print '<a href="index.php?page=modif_conf">Modification d\'une configuration</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
-					print '<a  href="index.php?page='.is_activate()?'desactive">Désactivation':'active">Activation'.' du serveur</a><br>';
+					print '<a  href="index.php?page="'.(is_activate()?'desactive">Désactivation':'active">Activation').' du serveur</a><br>';
 					print '<a href="index.php?page=desinstall">Désinstallation du serveur</a><br>';
 				  }
 				}
