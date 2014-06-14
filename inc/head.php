@@ -1,3 +1,6 @@
+<!--
+ Code par Jason Gantner
+-->
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,23 +18,23 @@
 			  Web Admin DHCP
 			</header>
 			<nav>
-				<a href="index.php?page=etat">État du serveur</a><br>
+				<a <?php print (($page=='etat')?'id="current"':'href="index.php?page=etat"');?>>État du serveur</a><br>
 				<?php 
 				if(is_install()){
 				  if($_SESSION['grade']>0){
-					print '<a href="index.php?page=static">Ajouter des IPs statiques</a><br>';
+					print '<a '.(($page=='static')?'id="current"':'href="index.php?page=static"').'>Ajouter des IPs statiques</a><br>';
 				  }
 				  if($_SESSION['grade']>1){
-					print '<a href="index.php?page=plage">Ajouter une Plage</a><br>';
-					print '<a href="index.php?page=modif_conf">Modification d\'une configuration</a><br>';
+					print '<a '.(($page=='plage')?'id="current"':'href="index.php?page=plage"').'">Ajouter une Plage</a><br>';
+					print '<a '.(($page=='modif_conf')?'id="current"':'href="index.php?page=modif_conf"').'>Modification d\'une configuration</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
 					print '<a  href="index.php?page="'.(is_activate()?'desactive">Désactivation':'active">Activation').' du serveur</a><br>';
 					print '<a href="index.php?page=desinstall">Désinstallation du serveur</a><br>';
 				  }
 				}
-				else{
-				  print '<a href="index.php?page=install">Installation du serveur</a><br>';
+				else if($_SESSION['grade']>2){
+				  print '<a '.($page=='install')?'id="current"':'href="index.php?page=install"'.'>Installation du serveur</a><br>';
 				  }
 				?>
 				<a href="index.php?page=deco">Déconnexion</a><br>

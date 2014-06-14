@@ -1,5 +1,8 @@
 <article>
 <?php
+/*
+  Code par Jason Gantner
+*/
 require 'inc/network.php';
 $nw=get_network();
 ?>
