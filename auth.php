@@ -26,7 +26,7 @@
 	//inclusion du script pour l'authentification
     </script>
   </head>
-  <body lang="fr" onload="init();">
+  <body lang="fr">
   <noscript class="error" id="noJS">L'authentification sera impossible sans JavaScript!</noscript><br>
     <?php 
       if(isset($_SESSION['erreur'])){
