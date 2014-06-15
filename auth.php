@@ -1,5 +1,6 @@
 <?php
   session_start();
+  // si l'utilisateur est connecté, on le renvoie sur l'index
   if(isset($_SESSION['user'])&&isset($_SESSION['grade'])){
     header('HTTP/1.1 307 Temporary Redirect');
     header('Location: index.php');
@@ -18,38 +19,18 @@
     <meta charset="utf-8">
     <title> Authentification </title>
     <link type="text/css" rel="stylesheet" href="styles/auth.css">
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js">//inclusion du code pour le sha512</script>
-    <script>
-      function init(){
-	document.getElementById("noJS").style.display="none";
-      }
-      function digest(){
-	//initialisation de variables pour la lisibilité
-	pseudo = document.getElementById("pseudo");
-	password = document.getElementById("pass");
-	chall1 = document.getElementById("ch1");
-	chall2 = document.getElementById("ch2");
-	//génération du challenge2 en hexa
-	chall2.value = CryptoJS.lib.WordArray.random(16).toString();
-	//hash de "user:pass"
-	var h1 = CryptoJS.SHA512(pseudo.value+':'+password.value).toString(CryptoJS.enc.Hex);
-	//hash de chall1 décodé de la base 64
-	var h2 = CryptoJS.SHA512(chall1.value).toString(CryptoJS.enc.Hex);
-	//hash de chall2 décodé de la base 64
-	var h3 = CryptoJS.SHA512(chall2.value).toString(CryptoJS.enc.Hex);
-	//on remplace le pass par le hash de h1:h2:h3 encodé en hexadécimal
-	password.value = CryptoJS.SHA512(h1+":"+h2+":"+h3).toString(CryptoJS.enc.Hex);
-	//on autorise l'envoie du formulaire
-	return true;
-      }
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js">
+	//inclusion du code pour le sha512 et la génération de nimbre aléatoire
+    </script>
+    <script src="scripts/auth.js">
+	//inclusion du script pour l'authentification
     </script>
   </head>
   <body lang="fr" onload="init();">
-  <span class="error" id="noJS">L'Authentification sera impossible sans JavaScript!</span><br>
+  <noscript class="error" id="noJS">L'authentification sera impossible sans JavaScript!</noscript><br>
     <?php 
       if(isset($_SESSION['erreur'])){
 	print '<span class="error">'.$_SESSION['erreur'].'</span><br>';
-	unset($_SESSION['erreur']);
       }
     ?>
     <form action="index.php" method="post" onsubmit="digest();">

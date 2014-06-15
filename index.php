@@ -29,6 +29,7 @@ function redir_auth($err){
 		$_SESSION['grade']=4;
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['IP']=$_SERVER['REMOTE_ADDR'];
+		if(isset($_SESSION['erreur'])){unset($_SESSION['erreur']);}
 		header('refresh: 0;');
       }
       else{
@@ -40,6 +41,18 @@ function redir_auth($err){
     }
   }
   else{
+    if(!($_SESSION['IP']===$_SERVER['REMOTE_ADDR'])){
+      unset($_SESSION['user']);
+      unset($_SESSION['grade']);
+      redir_auth($_SESSION['erreur']='Tentative de connexion depuis '.$_SERVER['REMOTE_ADDR'].' avec le cookie de '.$_SESSION['IP']);
+      exit();
+      }
+    if(!($_SESSION['user-agent']===$_SERVER['HTTP_USER_AGENT'])){
+      unset($_SESSION['user']);
+      unset($_SESSION['grade']);
+      redir_auth($_SESSION['erreur']='Tentative de connexion depuis '.$_SERVER['REMOTE_ADDR'].' avec le cookie de '.$_SESSION['IP']);
+      exit();
+    }
   	require 'inc/dhcp.php';
     if( isset($_GET['debug']) ){ $debug=true; }
     if( isset($_GET['page']) ){ $page=$_GET['page'];}

@@ -27,7 +27,7 @@ a:hover{color:white;}
 
 header{
   text-align: center;
-  background: #333333;
+  background: #333333 url("../images/logo.png") center no-repeat;
   padding:0.5em 0;
 }
 
