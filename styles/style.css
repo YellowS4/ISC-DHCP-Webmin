@@ -1,5 +1,7 @@
-@CHARSET "utf-8";
-
+@charset "utf-8";
+/*
+ * Style par Jason Gantner
+ */
 *{
   margin:0;
   padding:0;
@@ -16,20 +18,16 @@ section,footer{
   width:100%-12em;
 }
 
-a{
+a,a:visited{
   color: blue;
   text-decoration: none;
-}
-a:visited{
-  color:grey;
-  /* text-decoration: line-through; /**/
 }
 a:active{color:red;}
 a:hover{color:white;}
 
 header{
   text-align: center;
-  background: #333333;
+  background: #333333 url("../images/logo.png") center no-repeat;
   padding:0.5em 0;
 }
 
@@ -58,7 +56,7 @@ nav{
   width:12em;
 }
 
-nav a{
+nav a,nav a:visited{
 	display: block;
 	color: white;
 	text-align:center;
@@ -67,6 +65,10 @@ nav a{
 	transition-duration:1s;
 	transition-property:all;
 	width:100%;
+}
+
+nav a .current{
+  color:grey;
 }
 
 nav a:HOVER {
@@ -110,10 +112,6 @@ form#search{
   display:table;
 }
 
-r-collapse:collapse;
-  width: 100%;
-}
-
 #footer{
   border-top: 2px solid #888888;
   margin-top: 1em;
@@ -123,6 +121,10 @@ r-collapse:collapse;
   bottom:0;
   margin:0.2em;
 }
+
+/*
+ * Style par Florian Audon
+ */
 
 .icon{
 	height:16px;
