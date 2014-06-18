@@ -32,7 +32,7 @@
 											if(strstr($interface_ecoute,$nom_inter)){
 												$checked="checked=\"checked\"";
 											}
-											print '<label>'.$nom_inter.' ('.$value.') <input type="checkbox" '.$checked.' name="interface[]" value="'.$nom_inter.'"></label><br />';
+											print '<label>'.$nom_inter.' ('.$value.')<input type="checkbox" '.$checked.' name="interface[]" value="'.$nom_inter.'"> </label><br />';
 											
 										}
 									}

@@ -18,11 +18,12 @@ foreach($_POST as $indice=>$valeur){//On securise les valeurs en mettant par dé
 if(isset($_POST['conf'])){
 	settype($_POST['conf'],"integer");
 }
-if(isset($_GET['id']) && $_GET['id']>=0){
+if(isset($_GET['id']) && $_GET['id']>=0 && $_GET['id']!==""){//Sinon "" est comme 0
 	settype($_GET['id'],"integer");
 	$id=$_GET['id'];
 }else{
-	$id=0;
+
+	$id="";
 }
 $manquant="";
 
@@ -78,37 +79,9 @@ $manquant="";
 		?>
 		<form method="POST" action=""> 
 				<input type="hidden" name="id" value="<?php echo $row['id'];?>">
-				<span style="vertical-align:top;">fichier dhcpd.conf: </span><textarea name="conf_contenu" rows="20" cols="50"><?php echo $row['conf_contenu'];?></textarea><br />
-				interface:  <select name='interface'>
-				  <?php
-				  //On liste les interfaces
-					foreach ($nw as $nom_inter => $categories ) {//On boucle pour extraire toutes les interfaces $key= les nom des interfaces
-							if(is_array($categories) && $categories!=array()){//Si aucune info sur l'interface
-								foreach ($categories as $nom_categories => $info  ) { 
-									foreach ($info as  $value) { //On extrait les info des categories
-										if($nom_categories=="IPv4_addr"){//On ne prends que l'ip
-											$select="";
-											if($row['interface']==$nom_inter){
-												$select='selected="selected"';
-											}
-											print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' ('.$value.')</option>';
-										}
-									}
-								}
-							}else{
-								$select="";
-								if($row['interface']==$nom_inter){
-									$select='selected="selected"';
-								}			
-								print '<option value="'.$nom_inter.'" '.$select.'>'.$nom_inter.' (Aucun adresse d?finie)</option>';
-							}
-							
-						} 
-				  ?>
-				  </select>
-				  
-				nom de la configuration: <input type="text" name="nom" value="<?php echo $row['nom_conf'];?>"/><br />
-				Appliquer la configuration (cela remplaçera la configuration actuelle):  Oui <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>> Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>><br />
+				<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </span></label><textarea name="conf_contenu" rows="20" cols="50"><?php echo $row['conf_contenu'];?></textarea><br />	  
+				<label class="aligner">nom de la configuration: </label><input type="text" name="nom" value="<?php echo $row['nom_conf'];?>"/><br />
+				<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):<label>  Oui</label> <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>></label> <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>></label><br />
 				<input type="submit" value="Ajouter" name="ajouter">
 				<input type="submit" value="Modifier" name="modifier">
 				<input type="submit" value="retour" name="affichage_simple">
@@ -119,7 +92,7 @@ $manquant="";
 		print 'Afficher seulement:<form method="POST" class="liste_conf"> Les configuration de l\'utilisateur: Après la date:<input type="date" name="selection_date"><input type="submit" value="selectionner" name="selectionner">';
 		print 'Trié par date <select name="trie_date"><option value="ASC">Croissant</option><option value="DESC">Descroissant</option></select><input type="submit" value="trié" name="trie"><br /></form>';
 		
-			
+		echo $_GET['id'];
 		//On prends le nombre de configuration pour la pagination
 		if(isset($_POST['selection_date']) && $_POST['selection_date']!==""){
 			$liste_conf=listerConf($connex,"0","0",$_POST['selection_date']);
@@ -159,9 +132,9 @@ $manquant="";
 			
 				<form method="POST" action="" class="conf<?php if($row['conf_actuelle']==="true"){ echo '_actuelle';} //On ajoute toutes nos classes pour les gerer en js ?>"> 
 					<input type="hidden" name="id" value="<?php echo $row['id'];?>">
-					<span style="vertical-align:top;">fichier dhcpd.conf: </span><textarea name="conf_contenu" rows="20" cols="50"><?php echo $row['conf_contenu'];?></textarea><br />				  
-					nom de la configuration: <input type="text" name="nom" value="<?php echo $row['nom_conf'];?>"/><br />
-					Appliquer la configuration (cela remplaçera la configuration actuelle):  Oui <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>> Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>><br />
+					<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </label></span><textarea class="form" name="conf_contenu" rows="20" cols="50"><?php echo $row['conf_contenu'];?></textarea><br />				  
+					<label class="aligner">nom de la configuration: </label><input type="text" class="form" name="nom" value="<?php echo $row['nom_conf'];?>"/><br />
+					Appliquer la configuration (cela remplaçera la configuration actuelle):  <label>Oui<input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>></label>  <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>></label><br />
 					<input type="submit" value="Ajouter" name="ajouter">
 					<input type="submit" value="Modifier" name="modifier">
 				</form>	
@@ -171,24 +144,24 @@ $manquant="";
 			//ESSAI DE PAGINATION
 			//On definit les pages a afficher
 				//Le debut
-				echo '<a href="index.php?page=modif_conf&id=0"><< </a>';
+				echo '<a href="modif_conf-0.php"><< </a>';
 				if($id>=6){
 					for($i=-NB_PAGE/2+5; $i<NB_PAGE/2+6; $i++){
 						//On selectionne tous les parametre dans l'url
-							echo '<a href="index.php?page=modif_conf&id='.$i.'">'.$i.'</a>';
+							echo '<a href="modif_conf-'.$i.'.php">'.$i.'</a>';
 					}
 				}elseif($id<=0){
 					for($i=-NB_PAGE/2+1; $i<NB_PAGE/2+2; $i++){
 						//On selectionne tous les parametre dans l'url
-							echo '<a href="index.php?page=modif_conf&id='.$i.'">'.$i.'</a>';
+							echo '<a href="modif_conf-'.$i.'.php">'.$i.'</a>';
 					}
 				}else{
 					for($i=-NB_PAGE/2+$id; $i<NB_PAGE/2+1+$id; $i++){
 						//On selectionne tous les parametre dans l'url
-							echo '<a href="index.php?page=modif_conf&id='.$i.'">'.$i.'</a>';
+							echo '<a href="modif_conf-'.$i.'.php">'.$i.'</a>';
 					}
 				}
-				echo '<a href="index.php?page=modif_conf&id='.$nb_pages.'"> >></a>';
+				echo '<a href="modif_conf-'.$nb_pages.'.php"> >></a>';
 			//FIN ESSAI DE PAGINATION
 			}
 		print '<form method="POST" action=""><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
