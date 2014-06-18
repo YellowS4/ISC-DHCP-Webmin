@@ -9,6 +9,8 @@
       $h2=hash('sha512',$_SESSION['ch1']);
       $h3=hash('sha512',$_POST['challenge2']);
       if($_POST['pseudo']==='azerty' && $_POST['pass']===hash('sha512',hash('sha512','azerty:1234').':'.$h2.':'.$h3)){
+		$res=($bdd,$_POST['pseudo']);
+		print_r($res);
 		$_SESSION['user']='test user';
 		$_SESSION['grade']=4;
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
