@@ -1,0 +1,26 @@
+body{
+  color:black;
+  text-align:center;
+}
+
+form{
+  border-radius: 20%;
+  background: linear-gradient(#2CD125,#1B6B0C);
+  max-width: 15em;
+  padding: 4em 1em;
+  text-align: center;
+  display: inline-block;
+  border: 1px rgb(38, 114, 32) solid;
+  box-shadow: 0em 0em 1em blueviolet;
+  margin-top:10%;
+}
+
+form * {
+  margin:0.2em 0;
+  padding:0.2em;
+}
+
+.error{
+  color:red;
+  font-weight:bold;
+}

@@ -2,9 +2,9 @@
 <?php
 		require 'inc/network.php';
 		if(is_install()){//On verifie que le dhcp est installé
-			echo 'serveur DHCP: Installé <img src="images/vert.png" class="icon"><br />';
+			echo 'serveur DHCP: Installé <img src="/RT/Projet34/Florian/images/vert.png" class="icon"><br />';
 		}else{
-			echo 'serveur DHCP: Non installé <img src="images/rouge.png" class="icon"><br />';
+			echo 'serveur DHCP: Non installé <img src="/RT/Projet34/Florian/images/rouge.png" class="icon"><br />';
 		}
 		echo 'Récapitulatif des interface: <br \>';
 		$interfaces=get_network();
