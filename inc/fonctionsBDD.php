@@ -58,12 +58,14 @@ function listerConf_id($connex, $id){
 
 function getHash($connex,$user){
   $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
-  return $req->execute(Array($user));
+  $req->execute(Array($user));
+  return $req->fetch();
 }
 
 function getUser($connex,$user){
   $req=$connex->prepare("SELECT * FROM projet34_users WHERE login=?");
-  return $req->execute(Array($user));
+  $req->execute(Array($user));
+  return $req->fetch();
 }
 
 ?>
