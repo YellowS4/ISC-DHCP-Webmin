@@ -1,12 +1,9 @@
 <?php
+  require_once('inc/fonctions_generales.php');
   session_start();
   // si l'utilisateur est connecté, on le renvoie sur l'index
   if(isset($_SESSION['user'])&&isset($_SESSION['grade'])){
-    header('HTTP/1.1 307 Temporary Redirect');
-    header('Location: index.php');
-    header('Status: 307 Temporary Redirect');
-    header('Content-Type: text/html; charset=UTF-8');
-    header('refresh: 0;');
+    redir('index.php');
     exit();
   }
 ?>

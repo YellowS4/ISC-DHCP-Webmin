@@ -1,5 +1,4 @@
 <?php
-  
   /*
     Code par Jason Gantner
   */
@@ -24,13 +23,13 @@
   //transforme une ip écrite en décimal pointé/hexa/tableau de quatres octets en entier
   function IP2int($addr){
     switch(gettype($addr)){
-      case "integer":
+      case 'integer':
 	//si on reçoit un entier, il n'y a rien à faire
 	$addri=$addr;
 	break;
-      case "string";
+      case 'string';
 	//si c'est une chaine de caractères, il peut y avoir plusieurs possibilités
-	if(preg_match("@[0-9a-fA-F]{8}@",$addr)){
+	if(preg_match('@[0-9a-fA-F]{8}@',$addr)){
 	  //cas où c'est une écriture héxadécimale
 	  $addri=hexdec($addr);//simple conversion d'héxadécimal à décimal
 	  break;
@@ -45,7 +44,8 @@
 	    $addr=$tmp;
 	  }
 	}
-      case "array":
+      case 'array':
+	//si c'est un tableau on le parcours et on concatene les entiers à l'aide d'un décalage binaire
 	$addri=0x0;
 	for( $i=0;$i<4;$i++ ){
 	  $addri=($addri<<8)+$addr[$i];
@@ -55,70 +55,93 @@
 	$addri=false;
 	break;
     }
-    return $addri;
+    return $addri; //on renvoie soit un entier en cas de réussite, soit false en cas d'erreur
   }
   
   //fonction permettant d'obtenir des informations sur les interfaces du serveurs et les réseaux connéctés
 function get_network(){
-  exec("/sbin/ifconfig -a 2>&1",$return);
-  $interfaces=Array();
+  exec('/sbin/ifconfig -a 2>&1',$return);//on execute ifconfig sur toutes les interfaces
+  $interfaces=Array();//on crée un tableau pour stocker des informations sur les interfaces
   $if_count=0;
   foreach($return as $line){
+    //on parcoure ligne par ligne la réponse d'ifconfig
     if( preg_match('@^[a-z]+\d*@',$line,$matches)){
+      //ici on matche le nom d'une interface donc on l'ajoute au tableau
       $current_if=$matches[0];
       $interfaces[$current_if]=Array();
       $current_alias_v4=0;
       $current_alias_v6=0;
       $current_alias_v6_local=0;
     }
-    if( preg_match('@inet addr:([\d\.]+)  Bcast:[\d\.]+  Mask:([\d\.]+)@',$line,$matches)){ //debian ifconfig
+    if( preg_match('@inet addr:([\d\.]+)  Bcast:[\d\.]+  Mask:([\d\.]+)@',$line,$matches)){
+      //ici on matche une addresse IP et son masque sur un système Debian 6/7
       $interfaces[$current_if]['IPv4_addr'][$current_alias_v4]=$matches[1];
       $interfaces[$current_if]['IPv4_mask'][$current_alias_v4]=$matches[2];
       $current_alias_v4+=1;   
      }
-    else if( preg_match('@inet ([\d\.]+) netmask 0x([0-9a-f]{8})@',$line,$matches)){//freebsd ifconfig
+    else if( preg_match('@inet ([\d\.]+) netmask 0x([0-9a-f]{8})@',$line,$matches)){
+      //ici on matche une addresse IP et son masque sur un système FreeBSD 10
       $interfaces[$current_if]['IPv4_addr'][$current_alias_v4]=$matches[1];
       $interfaces[$current_if]['IPv4_mask'][$current_alias_v4]=$matches[2];
       $current_alias_v4+=1;
     }
+    // les opérations IPv6 ne sont pas utiles pour l'instant, on les commente pour ne pas faire des opérations inutiles
+    /*
     else if( preg_match('@inet6 (fe80\:[\:\da-f]+)%.+\d@',$line,$matches)){
+      //ici on matche une addresse IPv6 link-local 
       $interfaces[$current_if]['IPv6_addr_link-local']=$matches[1];
       $current_alias_v6_local+=1;
     }
     else if( preg_match('@inet6 ([\:\da-f]+) prefixlen (\d+)@',$line,$matches)){
+      //ici on matche une addresse IPv6 unique et la longueur de son préfixe
       $interfaces[$current_if]['IPv6_addr'][$current_alias_v6] = $matches[1];
       $interfaces[$current_if]['IPv6_prefixlen'][$current_alias_v6] = $matches[2];
       $current_alias_v6 += 1;
     }
+    //*/
   }
   foreach(Array_keys($interfaces) as $if){
+    //ici on calcule le subnet de chaque addresse IPv4 en convertissant les IP en entier de 32 bits et en faisant un ET logique puis on le reconvertit en écriture décimale
     if(isset($interfaces[$if]['IPv4_mask'])){
       foreach(Array_keys($interfaces[$if]['IPv4_addr']) as $i){
         $interfaces[$if]['IPv4_subnet'][$i] = int2decPointIP(IP2int($interfaces[$if]['IPv4_addr'][$i])&IP2int($interfaces[$if]['IPv4_mask'][$i]));
       }
     }
   }
-  unset($return);
-  exec("/usr/bin/netstat -r 2>&1",$return);
+  unset($return);//on efface le resultat d'ifconfig
+  exec('/usr/bin/netstat -r 2>&1',$return);// on execute netstat pour obtenir des informations sur les routeurs
   foreach($return as $line){
-    if (preg_match('@([\d\.]+|default)\h+([\d\.]+)\h+[UGHRS]+\h+\d\h+\d+\h+([a-z]+\d)@',$line,$matches)){
-      $interfaces[$matches[3]]['gateways'][$matches[2]][]=($matches[1]==="default")?"0.0.0.0":$matches[1];
+    if (preg_match('@([\d\.]+|default)\h+([\d\.]+)\h+[UGHRS]+\h+\d\h+\d+\h+([a-z]+\d*)@',$line,$matches)){
+      //ici on matche une entrée de la table de routage IPv4
+      $interfaces[$matches[3]]['gateways'][$matches[2]][]=($matches[1]==='default')?'0.0.0.0':$matches[1];
     }
   }
   return $interfaces;
 }
 
+function get_ns(){
+  $NS=Array();
+  foreach(preg_split('@\r\n|\n@',file_get_contents('/etc/resolv.conf')) as $line){
+    //on lit le fichier resolv.conf pour obtenir les DNS
+    if(preg_match('@nameserver\h(((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))@',$line,$matches)){
+      $NS[]+=$matches[1];
+  print_r($matches);
+    }
+  }
+  return $NS;
+}
+
+
 //fonction pour tester si une addresse appartient à un subnet
 function addr_in_subnet($addr,$subnet,$mask){
-    print $debug?"IN addr_in_subnet():":'';
     $addr = IP2int($addr);
     $subnet = IP2int($subnet);
     $mask = IP2int($mask);
-    print ($addr===false)?"L'adresse n'as pas pu être transformée en int<br>":'';
-    print ($subnet===false)?"Le subnet n'as pas pu être transformé":'';
+    echo ($addr===false)?'L\'adresse n\'as pas pu être transformée en int<br>':'';
+    echo ($subnet===false)?'Le subnet n\'as pas pu être transformé':'';
     if($addr && $subnet && $mask){
       return ($addr & $mask === $subnet & $mask);
     }
-    else{return "error";}
+    else{return 'error';}
   }
 ?>

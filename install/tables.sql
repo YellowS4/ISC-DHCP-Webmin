@@ -1,0 +1,31 @@
+/*
+ * Code par Jason Gantner
+ * script pour postgreSQL
+ */
+-- Partie Admin DHCP
+
+CREATE DATABASE Projet34 WITH ENCODING 'Unicode';
+
+CREATE TABLE Projet34_Grades(
+  idGrade SERIAL UNIQUE NOT NULL PRIMARY KEY,
+  nomGrade VARCHAR(30) UNIQUE NOT NULL
+);
+
+CREATE TABLE Projet34_Users(
+  idUser SERIAL UNIQUE NOT NULL PRIMARY KEY,
+  nomUser VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  login VARCHAR(30) UNIQUE NOT NULL,
+  h1 VARCHAR(128) UNIQUE NOT NULL,
+  refGrade INTEGER NOT NULL REFERENCES Projet34_Grades ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE Projet34_Configurations(
+  idConf SERIAL UNIQUE NOT NULL PRIMARY KEY,
+  creation TIMESTAMP NOT NULL DEFAULT current_timestamp,
+  contenuConf TEXT NOT NULL,
+  createurConf INTEGER NOT NULL REFERENCES Projet34_Users ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Partie Tickets
+-- À venir

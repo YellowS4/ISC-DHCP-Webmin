@@ -1,32 +1,14 @@
 <article>
 <?php
-  require 'inc/network.php';
-  $error=Array();
-  print '<pre>';
+  echo '<pre>';
   print_r($_POST);
-  print '</pre>';
-  function printErrors($errors){
-    settype($errors,'array');
-    switch( count($errors)){
-      case 0:
-	print "il n'y a pas eu d'erreurs.";
-	break;
-      case 1:
-	print "Erreur:".$errors[0];
-	break;
-      default:
-	print 'Erreurs :<ul class="error">';
-	foreach($errors as $error){
-	  print '<li>'.$error.'</li>';
-	}
-	print '</ul>';
-	break;
-    }
-  }
+  echo '</pre>';
+  require_once 'inc/network.php';
+  require_once 'inc/fonctions_generales.php';
+  $error=Array();
   // verification des entrées
-  $error=[];
-  $all_good = true;
-  $regIP4 = "@([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}@";
+  $all_good = true;//variable pour savoir si il y a des erreurs ou pas
+  $regIP4 = "@^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})$@"; //expression régulière pour une IPv4
   if( isset($_POST['subnet']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['mask']) ){
     if( preg_match($regIP4,$_POST['subnet'],$subnet) and preg_match($regIP4,$_POST['debut'],$debut) and preg_match($regIP4,$_POST['fin'],$fin) and settype($_POST['mask'],'int') ){
       $subnet = $subnet[0];
@@ -71,14 +53,14 @@
   }
   else{
     $rule='subnet '.$subnet.' netmask '. int2decPointIP($maski)." {\n";
-    $rule.="\trange ".$debut." ".$fin.";\n";
-    if(preg_match('@^([0-2]?[0-9]?[0-9].){3}[0-2]?[0-9]?[0-9]$@',preg_replace('@\h@','',$_GET['routeur'])&&addr_in_subnet($_GET['routeur'],$subnet,$mask)){
-      $rule.="\toption routeurs ".$_GET['routeur'].";\n";
+    $rule.="\trange ".$debut.' '.$fin.";\n";
+    if(preg_match($regIP4,$_POST['routeur']) && addr_in_subnet($_POST['routeur'],$subnet,$mask)){
+      $rule.="\toption routeurs ".$_POST['routeur'].";\n";
     }
     //TODO ajouter DNS et domaine
-    //if(preg_match('@(\h*,?\h*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}\h?,?\h?)+\h*@',$_GET['DNS'])
+//    if(preg_match('@(\h*,?\h*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}\h*,?\h*)+\h*@',$_POST['DNS'])
     $rule.="}\n";
-    print "<pre>.$rule.</pre>";
+    echo '<pre>',$rule,'</pre>';
   }
 ?>
 </article>

@@ -1,7 +1,6 @@
 var totalOptions=1;
 function verifPlage(){
   //initialisation des variables
-  out=true;
   debut = document.getElementById("plage_debut").value.split('.');
   fin = document.getElementById("plage_fin").value.split('.');
   i = 0;
@@ -9,7 +8,7 @@ function verifPlage(){
   fin_valid = true;
   deb_inf_fin =true;
   alert_msg='';
-  //comparaison des IP fin et debut et verification de la validitÃ© des IPs
+  //comparaison des IP fin et debut et verification de la validité des IPs
   while(i < 4){
     if( debut[i] < 0 || debut[i] > 255 ){ deb_valid=false; }
     if( fin[i] < 0 || fin[i] > 255 ){ fin_valid = false; }
@@ -30,18 +29,7 @@ function verifPlage(){
   if(!deb_inf_fin){
     alert_msg+="Le début de la plage est supérieur à  la fin !\n";
   }
-  alert(alert_msg);
+  if(alert_msg!=''){
+    alert(alert_msg);
+  }
 };
-
-// function update_options(){
-//   options=document.getElementById("options");
-//   if(options.children[options.children.length-1].value!=''){
-//     elem = document.getElementById("options").children[0].cloneNode();
-//     elem.setAttribute('name','option'+totalOptions);
-//     for(option in document.getElementById("options").children[0].children){ elem.appendChild(option)};
-//     document.getElementById("options").appendChild(elem);
-//     elem = document.getElementById("options").children[1].cloneNode();
-//     elem.setAttribute('name','option'+totalOptions+'_value');
-//     document.getElementById("options").appendChild(elem);
-//   }
-// };
