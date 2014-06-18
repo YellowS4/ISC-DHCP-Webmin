@@ -51,4 +51,9 @@ function listerConf_actuelle($connex, $actuelle){
 	return $resultats;
 }
 
+function getHash($connex,$user){
+  $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
+  return $res->execute(Array($user));
+}
+
 ?>
