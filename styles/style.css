@@ -50,7 +50,11 @@ nav{
   font-family: Helvetica, Arial;
   border-right:1px solid black;
   width:100%;
-  overflow:scroll;
+  overflow:auto;
+}
+
+#current{
+  color:grey;
 }
 
 #left{
@@ -91,8 +95,8 @@ article{
   margin:2em;
   padding:2em;
   border:1px solid black;
-  border-radius:10px;
-  background-color:#332211;
+  border-radius:5px;
+  background-color:#222222;
 }
 
 
@@ -112,9 +116,8 @@ input:not(:focus):invalid{
   color:red;
 }
 
-
-form#search{
-  display:table;
+fieldset {
+  padding:0.5em;
 }
 
 #footer{
@@ -134,20 +137,4 @@ form#search{
 .icon{
 	height:16px;
 	width:16px;
-}
-
-.conf{
-	display:none;
-}
-
-.conf_default{
-	display:none;
-}
-
-.conf_actuelle{
-	display:none;
-}
-
-.conf_default_actuelle{
-	display:none;
 }

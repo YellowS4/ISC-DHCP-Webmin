@@ -3,7 +3,9 @@
   if(!(isset($_SESSION['user']) && isset($_SESSION['grade']))){
     if(isset($_POST['keep'])){setcookie('user',$_POST['pseudo'],time()+(60*60*24*10));}//on garde le cookie 10 jours
     if(isset($_POST['pseudo']) && isset($_POST['pass']) && isset($_POST['challenge2'])){
-      $h1=hash('sha512','azerty:1234');
+      require_once 'inc/fonctionsBDD.php';
+      $bdd=ConnexionBDD();
+      $h1=hash('sha512',gethash($bdd,$_POST['pseudo']));
       $h2=hash('sha512',$_SESSION['ch1']);
       $h3=hash('sha512',$_POST['challenge2']);
       if($_POST['pseudo']==='azerty' && $_POST['pass']===hash('sha512',hash('sha512','azerty:1234').':'.$h2.':'.$h3)){

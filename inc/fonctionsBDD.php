@@ -56,4 +56,9 @@ function listerConf_id($connex, $id){
 
 
 
+function getHash($connex,$user){
+  $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
+  return $res->execute(Array($user));
+}
+
 ?>
