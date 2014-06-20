@@ -31,10 +31,10 @@
 			</datalist>
 			Début de la plage: <input id="plage_debut" type="text" name="debut"
 				onchange="verifPlage();"
-				pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})"
+				pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})$"
 				placeholder="ex:192.168.0.1"><br> <span>Fin de la plage :</span> <input
 				id="plage_fin" type="text" name="fin" onchange="verifPlage();"
-				pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})"
+				pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})$"
 				placeholder="ex:192.168.0.253"><br>
 		</p>
 		<fieldset id="options">
@@ -64,11 +64,11 @@
 			<br> <input type="checkbox" name="check_domain" form="plage"> Nom de
 			domaine : <input type="text" name="domain"
 				placeholder="ex: home ou batiment3.local ..."
-				pattern="[a-z0-9]+(\.[a-z0-9]+)*"><br> <input type="checkbox"
+				pattern="[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*"><br> <input type="checkbox"
 				name="check_DNS" form="plage"> Serveurs de noms : <input type="text"
 				name="DNS" list="nslist"
 				placeholder="ex:8.8.8.8, 8.8.4.4 ou 10.100.100.20, 8.8.8.8 ..."
-				pattern="([\,\h]*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2})+[\,\h]*"
+				pattern="([\,\h]*((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\,\h]*"
 				multiple><br>
 			<datalist id="nslist">
 				<?php
