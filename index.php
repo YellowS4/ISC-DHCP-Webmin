@@ -7,11 +7,13 @@
     if(isset($_POST['pseudo']) && isset($_POST['pass']) && isset($_POST['challenge2'])){
       require_once 'inc/fonctionsBDD.php';
       $bdd=ConnexionBDD();
-      $hres=getHash($bdd,$_POST['pseudo'])['h1'];
-      if(isset($hres['h1'])) $h1=$hres['h1'];
+      $hres=getHash($bdd,$_POST['pseudo']);
+      if(isset($hres['h1'])){
+      	$h1=$hres['h1'];
+      }
       else{
-	redir('auth.php','Mauvais Utilisateur/mot de passe');
-	exit();
+		redir('auth.php',/*'Mauvais Utilisateur/mot de passe'*/$hres);
+		exit();
       }
       $h2=hash('sha512',$_SESSION['ch1']);
       $h3=hash('sha512',$_POST['challenge2']);
@@ -23,7 +25,6 @@
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['IP']=$_SERVER['REMOTE_ADDR'];
 		if(isset($_SESSION['erreur'])){unset($_SESSION['erreur']);}
-		session_regenerate_id();
 		header('refresh: 0;');
       }
       else{

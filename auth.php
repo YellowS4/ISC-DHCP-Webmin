@@ -16,7 +16,7 @@
     <meta charset="utf-8">
     <title> Authentification </title>
     <link type="text/css" rel="stylesheet" href="styles/auth.css">
-    <script type="application/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js">
+    <script type="application/javascript" src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha512.js">
 	//inclusion du code pour le sha512 et la génération de nimbre aléatoire
     </script>
     <script src="scripts/auth.js">

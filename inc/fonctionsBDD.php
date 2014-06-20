@@ -6,7 +6,7 @@ function connexionBDD(){
 	$PARAM_port='5432';
 	$PARAM_nom_bd='projet34'; // le nom de votre base de données
 	$PARAM_utilisateur='projet34'; // nom d'utilisateur pour se connecter
-	$PARAM_mot_passe='SuperSecurePassword'; // mot de passe de l'utilisateur pour se connecter
+	$PARAM_mot_passe='GXnyxX'; // mot de passe de l'utilisateur pour se connecter
 	
 	try
 	{
@@ -59,18 +59,20 @@ function listerConf_id($connex, $id){
 
 function getHash($connex,$user){
   $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
-  return $req->execute(Array($user));
+  $req->execute(Array($user));
+  return $req->fetch();
 }
 
 function getUser($connex,$user){
   $req=$connex->prepare("SELECT * FROM projet34_users WHERE login=?");
-  return $req->execute(Array($user));
+  $req->execute(Array($user));
+  return $req->fetch();
 }
 
 function getUsers($connex,$nombre,$offset){
   $req=$connex->prepare("SELECT * FROM projet34_users LIMIT ? OFFSET ?");
   $req->execute(Array($nombre,$offset));
-  return $req->fetch();
+  return $req->fetchAll();
 }
 
 ?>
