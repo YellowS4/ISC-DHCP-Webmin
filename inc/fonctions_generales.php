@@ -29,6 +29,7 @@ function redir($page,$err){
 //fonction pour afficher une ou plusieurs erreurs, prend un tableau en argument
 function printErrors($errors){
   settype($errors,'array');
+  echo '<span class="error">';
   switch( count($errors)){
     case 0:
       echo 'il n\'y a pas eu d\'erreurs.';
@@ -46,5 +47,6 @@ function printErrors($errors){
       echo '</ul>';
       break;
   }
+  echo '</span>';
 }
 ?>
