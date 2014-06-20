@@ -5,14 +5,14 @@
     if(isset($_POST['pseudo']) && isset($_POST['pass']) && isset($_POST['challenge2'])){
       require_once 'inc/fonctionsBDD.php';
       $bdd=ConnexionBDD();
-      $h1=hash('sha512',gethash($bdd,$_POST['pseudo']));
+      $h1=getHash($bdd,$_POST['pseudo'])['h1'];
       $h2=hash('sha512',$_SESSION['ch1']);
       $h3=hash('sha512',$_POST['challenge2']);
-      if($_POST['pseudo']==='azerty' && $_POST['pass']===hash('sha512',hash('sha512','azerty:1234').':'.$h2.':'.$h3)){
-		$res=($bdd,$_POST['pseudo']);
-		print_r($res);
-		$_SESSION['user']='test user';
-		$_SESSION['grade']=4;
+      if($_POST['pass']===hash('sha512',$h1.':'.$h2.':'.$h3)){
+		$res=getUser($bdd,$_POST['pseudo']);
+		$_SESSION['user']=$res['nomuser'];
+		$_SESSION['grade']=$res['refgrade'];
+		$_SESSION['id']=$res['id'];
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['IP']=$_SERVER['REMOTE_ADDR'];
 		if(isset($_SESSION['erreur'])){unset($_SESSION['erreur']);}
