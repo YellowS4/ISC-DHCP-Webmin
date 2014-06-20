@@ -1,6 +1,8 @@
-﻿<?php
+﻿<article>
+<?php
 	include 'inc/network.php';
 	$nw=get_network();
+	if(is_install()){
 	if(isset($_POST['valider']) && $_POST['valider']==="Valider"){
 		if(isset($_POST['interface']) && $_POST['interface']!="Array()"){
 			$interfaces="";
@@ -14,7 +16,7 @@
 		}
 	}
 ?>
-<article>
+
 	Modification des interfaces d'écoutes
 	<form method="POST">
 		<?php
@@ -51,3 +53,8 @@
 	</form>
 
 </article>
+<?php
+}else{
+			printErrors(Array("Le serveur n'est pas installé"));
+}
+?>
