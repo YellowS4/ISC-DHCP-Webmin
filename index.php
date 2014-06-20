@@ -23,7 +23,7 @@
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['IP']=$_SERVER['REMOTE_ADDR'];
 		if(isset($_SESSION['erreur'])){unset($_SESSION['erreur']);}
-		session_regenerate_id()
+		session_regenerate_id();
 		header('refresh: 0;');
       }
       else{

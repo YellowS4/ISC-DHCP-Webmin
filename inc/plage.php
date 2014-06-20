@@ -48,7 +48,7 @@ $nw=get_network();
       }
     }
     foreach(Array_keys($nw) as $if){
-      if(isset($nw[$if]['IPv4_addr']){
+      if(isset($nw[$if]['IPv4_addr'])){
 	foreach( $nw[$if]['IPv4_addr'] as $addr ){
 	  echo '<option value="',$addr,'">addresse de ',$if,'</option>';
 	}

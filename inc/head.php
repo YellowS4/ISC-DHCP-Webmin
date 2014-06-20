@@ -28,8 +28,8 @@
 					echo '<a ',(($page=='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
-					echo '<a ',(($page=='active'||$page=='desactive')?'id="current"':('href="index.php?page="'.(is_activate()?'desactive">Désactivation':'active">Activation'))),' du serveur</a><br>';
-					echo '<a ',(($page=='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
+					echo '<a ',(($page=='active'||$page=='desactive')?'id="current"':'href="index.php?page="'.(is_activate()?'desactive">Désactivation':'active">Activation'),' du serveur</a><br>';
+					echo '<a ',($page=='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
 					echo '<hline>';
 					echo '<a ',(($page=='lister_utilisateurs')?'id="current"':'href="index.php?page=lister_utilisateurs"'),'>Lister les utilisateurs</a><br>';
 				  }
