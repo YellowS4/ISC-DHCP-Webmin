@@ -13,7 +13,7 @@
     }
     else $Npage=0;
     echo '<table><th>Utilisateurs</th>';
-    foreach(getUsers(ConnexionBDD()) as $user){
+    foreach(getUsers(ConnexionBDD(),$NBUsersParPage,$NPage) as $user){
       echo '<tr>',
 	'<td>',$user['Nom'],'</td>',
 	'<td>',$user['login'],'</td>',
@@ -23,13 +23,14 @@
 	    <input type="hidden" name="id" value="',$user['iduser'],'">
 	    <input type="submit" value="Modifier">
 	   </form>
-	 </td>'
-	'<td>
+	 </td>
+	 <td>
 	  <form action="?page=lister_utilisateurs&nbuppage=',$NBUsersParPage,'&npage=',$NPage,'&update=etat" method="POST">
-	    <input type="hidden" name="id" value="',$user['iduser'],'">'
+	    <input type="hidden" name="id" value="',$user['iduser'],'">';
 	  if(!$user['actif']){
 	    echo '<input type="hidden" name="actif" value="true">
 	    <input type="submit" value="Activer">';
+	  }
 	  else{
 	    echo '<input type="hidden" name="actif" value="false">
 	    <input type="submit" value="Désactiver">';

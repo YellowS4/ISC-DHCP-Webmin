@@ -61,11 +61,11 @@
     }
     ?>
 			</datalist>
-			<br> <input type="checkbox" name="check_domain" form="plage"> Nom de
+			<br> <input type="checkbox" name="check_domain"> Nom de
 			domaine : <input type="text" name="domain"
 				placeholder="ex: home ou batiment3.local ..."
 				pattern="[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*"><br> <input type="checkbox"
-				name="check_DNS" form="plage"> Serveurs de noms : <input type="text"
+				name="check_DNS"> Serveurs de noms : <input type="text"
 				name="DNS" list="nslist"
 				placeholder="ex:8.8.8.8, 8.8.4.4 ou 10.100.100.20, 8.8.8.8 ..."
 				pattern="([\,\h]*((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\,\h]*"
