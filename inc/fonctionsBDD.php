@@ -26,31 +26,32 @@ function connexionBDD(){
 function listerConf($connex,$limit="0", $offset="0",$date="0",$trie="ASC"){
 	if($limit==="0" && $offset==="0"){//On doit tout affichier
 		if($date==="0"){
-		echo "ok";
-			$resultats=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation  FROM dhcp_test ORDER BY date_creation ".$trie.";");
+			$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser ORDER BY creation ".$trie.";");
+		    $resultats->execute();
 		
 		}else{
-			echo "ok";
-			$resultats=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation  FROM dhcp_test  WHERE  date_creation>date('".$date."') ORDER BY date_creation ".$trie.";");
-			
+			//$resultats=$connex->query("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser WHERE  creation>date('".$date."') ORDER BY creation ".$trie.";");
+			$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser WHERE  creation>date('?') ORDER BY creation ".$trie.";");
+			$resultats->execute(Array($date));
 		}
 	}else{
 		if($date==="0"){
-				echo "ok";
-			$resultats=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation  FROM dhcp_test ORDER BY date_creation ".$trie." LIMIT ".$limit." OFFSET ".$offset.";");
-			
+			//$resultats=$connex->query("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser ORDER BY creation ".$trie." LIMIT ".$limit." OFFSET ".$offset.";");
+			$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser ORDER BY creation ".$trie." LIMIT ? OFFSET ?;");
+			$resultats->execute(Array($limit, $offset));
 		
 		}else{
-			echo "ok";
-			$resultats=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation FROM dhcp_test  WHERE date_creation>date('".$date."')  ORDER BY date_creation ".$trie." LIMIT ".$limit." OFFSET ".$offset.";");
-			
+			//$resultats=$connex->query("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser WHERE creation>date('".$date."')  ORDER BY creation ".$trie." LIMIT ".$limit." OFFSET ".$offset.";");
+			$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser WHERE creation>date('?') ORDER BY creation ".$trie." LIMIT ? OFFSET ?;");
+			$resultats->execute(Array($date,$limit, $offset));
 		}
 	}
 	return $resultats;
 }
 
 function listerConf_id($connex, $id){
-	$resultats=$connex->query("SELECT id,conf_contenu, interface, nom_conf, date_creation  FROM dhcp_test WHERE id=".$id." ORDER BY date_creation;");
+	$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser FROM dhcp_test WHERE id=? ORDER BY creation;");
+	$resultats->execute(Array($id));
 	return $resultats;
 }
 
@@ -58,14 +59,12 @@ function listerConf_id($connex, $id){
 
 function getHash($connex,$user){
   $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
-  $req->execute(Array($user));
-  return $req->fetch();
+  return $req->execute(Array($user));
 }
 
 function getUser($connex,$user){
   $req=$connex->prepare("SELECT * FROM projet34_users WHERE login=?");
-  $req->execute(Array($user));
-  return $req->fetch();
+  return $req->execute(Array($user));
 }
 
 ?>
