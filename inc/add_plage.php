@@ -48,7 +48,7 @@
       $all_good = false;
     }
   }
-  if($all_good){
+  if(!$all_good){
     printErrors($error);
   }
   else{
