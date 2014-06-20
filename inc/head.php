@@ -35,7 +35,7 @@
 						echo 'href="index.php?page="',($active?'desactive"':'active"'),'>',($active?'Désactivation':'Activation"'),' du serveur</a><br>';
 					}
 					echo '<a ',(($page=='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>DÃ©sinstallation du serveur</a><br>';
-					echo '<hline>';
+					echo '<hr>';
 					echo '<a ',(($page=='lister_utilisateurs')?'id="current"':'href="index.php?page=lister_utilisateurs"'),'>Lister les utilisateurs</a><br>';
 				  }
 				}
