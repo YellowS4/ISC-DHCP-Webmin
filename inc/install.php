@@ -2,7 +2,7 @@
 if(is_install()){
 	if(is_install()){
 		echo 'Serveur installe';
-		$apt_dhcp=shell_exec("../scripts/install_dhcp.sh 2>&1");//2>&1 affiche les erreurs
+		$apt_dhcp=shell_exec("scripts/install_dhcp.sh 2>&1");//2>&1 affiche les erreurs
 		
 		header('Location: index.php');
 	}else{
