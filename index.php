@@ -21,7 +21,7 @@
 		$res=getUser($bdd,$_POST['pseudo']);
 		$_SESSION['user']=$res['nomuser'];
 		$_SESSION['grade']=$res['refgrade'];
-		$_SESSION['id']=$res['id'];
+		$_SESSION['id']=$res['iduser'];
 		$_SESSION['user-agent']=$_SERVER['HTTP_USER_AGENT'];
 		$_SESSION['IP']=$_SERVER['REMOTE_ADDR'];
 		if(isset($_SESSION['erreur'])){unset($_SESSION['erreur']);}
