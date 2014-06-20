@@ -68,4 +68,10 @@ function getUser($connex,$user){
   return $req->fetch();
 }
 
+function getUsers($connex,$nombre,$offset){
+  $req=$connex->prepare("SELECT * FROM projet34_users LIMIT ? OFFSET ?");
+  $req->execute(Array($nombre,$offset));
+  return $req->fetch();
+}
+
 ?>

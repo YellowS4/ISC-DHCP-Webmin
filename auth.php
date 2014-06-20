@@ -1,4 +1,7 @@
 <?php
+/*
+ * Code par Jason Gantner
+ */
   require_once('inc/fonctions_generales.php');
   session_start();
   // si l'utilisateur est connecté, on le renvoie sur l'index
@@ -7,9 +10,6 @@
     exit();
   }
 ?>
-<!--
-  code par Jason Gantner
--->
 <!DOCTYPE HTML>
 <html>
   <head>
