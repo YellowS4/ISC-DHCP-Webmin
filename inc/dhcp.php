@@ -19,7 +19,7 @@
 	function is_install(){
 		//Pour eviter les long temps d'attente
 		/*$aptitude_dhcp=shell_exec("aptitude show isc-dhcp-server");
-		if(!preg_match("/State: not installed/",$aptitude_dhcp,$matches)){//On verifie que le dhcp est installé
+		if(preg_match("/State: not installed/",$aptitude_dhcp,$matches)){//On verifie que le dhcp est installé
 			$install=false;
 		}else{
 			$install=true;

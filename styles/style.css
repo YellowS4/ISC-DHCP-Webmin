@@ -74,6 +74,7 @@ nav a,nav a:visited{
 	transition-duration:1s;
 	transition-property:all;
 	width:100%;
+	margin-bottom:0;
 }
 
 nav a .current{
