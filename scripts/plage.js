@@ -1,4 +1,6 @@
-var totalOptions=1;
+/*
+ * Code par Jason Gantner
+ */
 function verifPlage(){
   //initialisation des variables
   debut = document.getElementById("plage_debut").value.split('.');
