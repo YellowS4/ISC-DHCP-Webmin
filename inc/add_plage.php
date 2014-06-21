@@ -1,7 +1,10 @@
 <article>
 <?php
+if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
   require_once 'inc/network.php';
   require_once 'inc/fonctions_generales.php';
+  echo '<h3>Résultat de la génération de la plage</h3>
+	Veuillez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
   $error=Array();
   // verification des entrées
   $all_good = true;//variable pour savoir si il y a des erreurs ou pas
@@ -49,17 +52,29 @@
   else{
     $rule='subnet '.$subnet.' netmask '. int2decPointIP($maski)." {\n";
     $rule.="\trange ".$debut.' '.$fin.";\n";
-    if(preg_match($regIP4,$_POST['routeur']) /*&& addr_in_subnet($_POST['routeur'],$subnet,$maski) /**/&& $_POST['check_routers']){
-      $rule.="\toption routeurs ".$_POST['routeur'].";\n";
+    if ($_POST['check_routers']==='on'){
+      if(preg_match($regIP4,$_POST['routeur']) /*&& addr_in_subnet($_POST['routeur'],$subnet,$maski) /**/){
+	$rule.="\toption routeurs ".$_POST['routeur'].";\n";
+      }
+      else $error[]='l\'adresse du routeur n\'est pas valide';
     }
-    if(preg_match('@(\h*,?\h*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}\h*,?\h*)+\h*@',$_POST['DNS'],$DNS)){
-      $rule.="\toption domain-name-servers ".$DNS[1].";\n";
+    if($_POST['check_domain']==='on'){
+      if(preg_match('@(\h*,?\h*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}\h*,?\h*)+\h*@',$_POST['DNS'],$DNS)){
+	$rule.="\toption domain-name-servers ".$DNS[1].";\n";
+      }
+      else $error[]='l\'adresse du serveur de noms n\'est pas valide';
     }
-    if(preg_match('@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*@',$_POST['domain'],$matches) && $_POST['check_domain']==='on'){
-      $rule.="\toption domain-name ".$matches[0].";\n";
+    if($_POST['check_domain']==='on'){
+      if(preg_match('@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*@',$_POST['domain'],$matches)){
+	$rule.="\toption domain-name ".$matches[0].";\n";
+      }
+      else $errors[]='le nom de domaine n\'est pas valide';
     }
     $rule.="}\n";
     echo '<pre>',$rule,'</pre>';
+    if(count($error)>0) printErrors($error);
   }
+}
+else echo '<span class="error">Vous n\'êtes pas assez gradé pour accèder à cette partie du site!</span>';
 ?>
 </article>
