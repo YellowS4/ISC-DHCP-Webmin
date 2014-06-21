@@ -8,7 +8,6 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
   $error=Array();
   // verification des entrées
   $all_good = true;//variable pour savoir si il y a des erreurs ou pas
-  $regIP4 = "@^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})$@"; //expression régulière pour une IPv4
   if( isset($_POST['subnet']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['mask']) ){
     if( preg_match($regIP4,$_POST['subnet'],$subnet) and preg_match($regIP4,$_POST['debut'],$debut) and preg_match($regIP4,$_POST['fin'],$fin) and settype($_POST['mask'],'int') ){
       $subnet = $subnet[0];

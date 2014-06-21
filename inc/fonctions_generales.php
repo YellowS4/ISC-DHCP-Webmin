@@ -49,4 +49,7 @@ function printErrors($errors){
   }
   echo '</span>';
 }
+
+//expression régulière pour une IPv4
+$regIP4 = "@^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})$@";
 ?>

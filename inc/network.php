@@ -2,7 +2,7 @@
   /*
     Code par Jason Gantner
   */
-  
+  require_once 'inc/fonctions_generales.php';
   //fonction pour transformer un entier 32bits en IP notée en décimal pointé
   function int2decPointIP($ip){
     $out='';
@@ -124,8 +124,8 @@ function get_ns(){
   foreach(preg_split('@\r\n|\n@',file_get_contents('/etc/resolv.conf')) as $line){
     //on lit le fichier resolv.conf pour obtenir les DNS
     if(preg_match('@nameserver\h(((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))@',$line,$matches)){
-      $NS[]+=$matches[1];
-  print_r($matches);
+      $NS[]=$matches[1];
+      print_r($matches);
     }
   }
   return $NS;
@@ -134,12 +134,13 @@ function get_ns(){
 
 //fonction pour tester si une addresse appartient à un subnet
 function addr_in_subnet($addr,$subnet,$mask){
+    //on commence par représenter les IP sous forme d'entiers 32 bits.
     $addr = IP2int($addr);
     $subnet = IP2int($subnet);
     $mask = IP2int($mask);
-    echo ($addr===false)?'L\'adresse n\'as pas pu être transformée en int<br>':'';
-    echo ($subnet===false)?'Le subnet n\'as pas pu être transformé':'';
-    if($addr && $subnet && $mask){
+    if($addr===false) echo 'L\'adresse n\'as pas pu être transformée en int<br>';
+    if($subnet===false) echo 'Le subnet n\'as pas pu être transformé';
+    if($addr && $subnet && !($mask===false)){
       return ($addr & $mask === $subnet & $mask);
     }
     else{return 'error';}
