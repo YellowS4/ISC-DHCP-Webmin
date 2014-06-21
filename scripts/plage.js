@@ -2,6 +2,7 @@
  * Code par Jason Gantner
  */
 function verifPlage(){
+  if(document.getElementById("plage_fin").value!=""&&document.getElementById("plage_debut").value!=""){
   //initialisation des variables
   debut = document.getElementById("plage_debut").value.split('.');
   fin = document.getElementById("plage_fin").value.split('.');
@@ -33,5 +34,6 @@ function verifPlage(){
   }
   if(alert_msg!=''){
     alert(alert_msg);
+  }
   }
 };
