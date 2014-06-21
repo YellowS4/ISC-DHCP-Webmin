@@ -117,7 +117,7 @@
 	case 'desinstall':
 		include_once 'inc/desinstall.php';
 		break;
-	case 'lister_utilisateurs':
+	case 'utilisateurs':
 		include_once 'inc/list_users.php';
 		break;
 	case 'deco':

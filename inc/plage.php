@@ -15,7 +15,7 @@
 	 * serveur et on les enregistre dans $nw
 	 */
 	?>
-	<form name="plage" method="POST" action="index.php?page=nouvelle_plage">
+	<form name="plage" method="POST" action="index.php?page=plage&generate">
 		<p>
 			<span>Subnet :</span> 
 			<select name='subnet'>
@@ -120,3 +120,4 @@
 			value="valider">
 	</form>
 </article>
+<?php if(isset($_GET['generate'])) include 'inc/add_plage.php'; ?>

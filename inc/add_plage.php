@@ -3,9 +3,8 @@
 if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
   require_once 'inc/network.php';
   require_once 'inc/fonctions_generales.php';
-  echo '<h3>Résultat de la génération de la plage</h3>
-	Veuillez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
-  $error=Array();
+    echo '<h3>Résultat de la génération de la plage</h3>';
+    $error=Array();
   // verification des entrées
   $all_good = true;//variable pour savoir si il y a des erreurs ou pas
   if( isset($_POST['subnet']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['mask']) ){
@@ -14,7 +13,7 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
       $debut = $debut[0];
       $fin = $fin[0];
       if($_POST['mask']<0 || $_POST['mask']>32){
-	$error[]+='Le masque est invalide (non compris entre 0 et 32)';
+	$error[]='Le masque est invalide (non compris entre 0 et 32)';
 	$all_good = false;
       }
       else{
@@ -27,12 +26,12 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
       }
     }
     else{
-      $error[] += 'Veuillez entrer correctement les données dans le formulaire!';
+      $error[] = 'Veuillez entrer correctement les données dans le formulaire!';
       $all_good = false;
     }
   }
   else{
-    $error[] += 'Veuillez renseigner les champs Subnet, début et fin du <a href="?page=plage">formulaire</a>';
+    $error[] = 'Veuillez renseigner les champs Subnet, début et fin du <a href="?page=plage">formulaire</a>';
     $all_good = false;
   }
   if($all_good && isset($maski)){
@@ -49,6 +48,7 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
     printErrors($error);
   }
   else{
+    echo 'Veuillez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
     $rule='subnet '.$subnet.' netmask '. int2decPointIP($maski)." {\n";
     $rule.="\trange ".$debut.' '.$fin.";\n";
     if ($_POST['check_routers']==='on'){
