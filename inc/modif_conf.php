@@ -1,10 +1,10 @@
 ﻿<article>
 <?php
 //Includes
-include 'inc/fonctionsBDD.php';
-include 'inc/network.php';
-include 'inc/appliquer_conf.php';
-include 'inc/dhcp.php';
+require_once 'inc/fonctionsBDD.php';
+require_once 'inc/network.php';
+require_once 'inc/appliquer_conf.php';
+require_once 'inc/dhcp.php';
 if(is_install()){
 	$connex=connexionBDD();
 	//Constantes
