@@ -5,11 +5,12 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=0.5, user-scalable=yes, maximum-scale=1.0">
 		<title>DHCP ADMIN</title>
 		<link type="text/css" rel="stylesheet" href="styles/style.css">
 		<?php 
-			  echo ($page==="plage")?'<script  src="scripts/plage.js"></script>':'';
-			  echo ($page==="modif_conf")?'<script  src="scripts/modif_conf.js"></script>':'';
+			  if($page==="plage") echo '<script  src="scripts/plage.js"></script>';
+			  if($page==="modif_conf") echo '<script  src="scripts/modif_conf.js"></script>';
 		?>
 	</head>
 	<body lang="fr">
@@ -21,26 +22,26 @@
 				<?php 
 				if(is_install()){
 				  if($_SESSION['grade']>0){
-					echo '<a ',(($page=='etat')?'id="current"':'href="index.php?page=etat"'),'>État du serveur</a><br>';
+					echo '<a ',(($page==='etat')?'id="current"':'href="index.php?page=etat"'),'>État du serveur</a><br>';
 				  }
 				  if($_SESSION['grade']>1){
-					echo '<a ',(($page=='plage')?'id="current"':'href="index.php?page=plage"'),'">Ajouter une Plage</a><br>';
-					echo '<a ',(($page=='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
+					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'">Générer une déclaration de subnet</a><br>';
+					echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
 					echo '<a ';
-					if($page=='active'||$page=='desactive')	echo 'id="current"';
+					if($page==='active'||$page==='desactive')	echo 'id="current"';
 					else{
 						$active=is_activate();
-						echo 'href="index.php?page=',($active?'desactive"':'active" '),'>',($active?'D�sactivation':'Activation'),' du serveur</a><br>';
+						echo 'href="index.php?page=',($active?'desactive"':'active" '),'>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
 					}
-					echo '<a ',(($page=='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
+					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
 					echo '<hr>';
-					echo '<a ',(($page=='lister_utilisateurs')?'id="current"':'href="index.php?page=lister_utilisateurs"'),'>Lister les utilisateurs</a><br>';
+					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=lister_utilisateurs"'),'>Gérer les utilisateurs</a><br>';
 				  }
 				}
 				else if($_SESSION['grade']>2){
-				  echo '<a ',($page=='install')?'id="current"':'href="index.php?page=install"','>Installation du serveur</a><br>';
+				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','>Installation du serveur</a><br>';
 				  }
 				?>
 				<a href="index.php?page=deco">Déconnexion</a><br>

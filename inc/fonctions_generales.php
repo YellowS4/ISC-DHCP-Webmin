@@ -6,7 +6,7 @@
 //fonction de redirection prenant la page de destination en argument et l'erreur provoquant la redirection si c'est le cas
 function redir($page,$err){
   //si besoin, on stocke l'erreur dans la session
-  if($err!=null){$_SESSION['erreur']=$err;}
+  if($err!==null){$_SESSION['erreur']=$err;}
   //on envoie une réponse de redirection HTTP au client
   header('HTTP/1.1 307 Temporary Redirect');
   header('Location: '.urlencode($page));

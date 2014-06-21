@@ -29,18 +29,18 @@ if(is_install()){
 
 		if(isset($_POST['ajouter']) && $_POST['ajouter']==="Ajouter"){ //On ajoute la nouvelle configuration
 			$erreur="";//Pour mettre des erreurs
-			if(!isset($_POST['contenuconf']) || $_POST['contenuconf']=="" || !isset($_POST['createur']) || $_POST['createur']=="" || !isset($_POST['actuelle']) || $_POST['actuelle']==""){ //On verifie tous les parametre
+			if(!isset($_POST['contenuconf']) || $_POST['contenuconf']==="" || !isset($_POST['createur']) || $_POST['createur']==="" || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$erreur.="veuillez remplir tous les champs";
 				echo $_POST['createur'];
 			}else{
-				if($_POST['actuelle']=="true"){//Si il existe déjà une conf actuelle on la met en false
+				if($_POST['actuelle']==="true"){//Si il existe déjà une conf actuelle on la met en false
 					//a del $resultats=listerConf_actuelle($connex,"true");
 					//a del $donnees=$resultats->fetch();
 					//$resultats=$connex->exec("UPDATE projet34_configurations  SET conf_actuelle=FALSE WHERE id=".$donnees['id']."; ");	
 					appliquer_conf($_POST['contenuconf']);
 				}
 			}
-			if(isset($erreur) && $erreur!=""){
+			if(isset($erreur) && $erreur!==""){
 				echo 'erreur:'.$erreur;
 			}else{
 				echo 'Ajout effectue';
@@ -50,23 +50,23 @@ if(is_install()){
 			
 			
 		}elseif(isset($_POST['modifier']) && $_POST['modifier']==="Modifier"){//Pour modifier une conf
-			if(!isset($_POST['contenuconf'])  || $_POST['contenuconf']=="" ||  !isset($_POST['createur']) || $_POST['createur']==""  || !isset($_POST['actuelle']) || $_POST['actuelle']==""){ //On verifie tous les parametre
+			if(!isset($_POST['contenuconf'])  || $_POST['contenuconf']==="" ||  !isset($_POST['createur']) || $_POST['createur']===""  || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$manquant="veuillez remplir tous les champs";
 				echo $manquant;
 			}else{
 				$erreur="";//Si toutesfois il y a des erreurs
-				if($_POST['actuelle']=="true"){
+				if($_POST['actuelle']==="true"){
 					$resultats=listerConf_actuelle($connex,"true");
 					$donnees=$resultats->fetch();
 					//$resultats=$connex->exec("UPDATE projet34_configurations  SET conf_actuelle=FALSE WHERE id=".$donnees['id']."; ");	
 					$verif=appliquer_conf($_POST['contenuconf']);
-					if($verif!=""){
+					if($verif!==""){
 						$erreur.="Erreur dans la configuration: ".$verif."\n";
 					}else{
 						echo "Configuration appliqué ";
 					}
 				}
-				if(isset($erreur) && $erreur!=""){
+				if(isset($erreur) && $erreur!==""){
 					echo $erreur;
 				}else{
 					echo 'modification effectue';
@@ -83,7 +83,7 @@ if(is_install()){
 					<input type="hidden" name="id" value="<?php echo $row['id'];?>">
 					<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </span></label><textarea name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />	  
 					<label class="aligner">Propriétaire de la configuration: </label><input type="text" name="nom" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
-					<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):<label>  Oui</label> <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']=="true"){ echo ' checked="checked"';} ?>></label> <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!="true"){ echo ' checked="checked"';} ?>></label><br />
+					<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):<label>  Oui</label> <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']==="true"){ echo ' checked="checked"';} ?>></label> <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!=="true"){ echo ' checked="checked"';} ?>></label><br />
 					<input type="submit" value="Ajouter" name="ajouter">
 					<input type="submit" value="Modifier" name="modifier">
 					<input type="submit" value="retour" name="affichage_simple">
@@ -100,10 +100,10 @@ if(is_install()){
 			}else{
 				$liste_conf=listerConf($connex);
 			}
-			if($liste_conf->rowCount()!=0){
+			if($liste_conf->rowCount()!==0){
 				$nb_conf=$liste_conf->rowCount();
 				//On calcule le nombre de page
-				if($nb_conf%NB_CONF_PAGE==0){
+				if($nb_conf%NB_CONF_PAGE===0){
 					$nb_pages=$nb_conf/NB_CONF_PAGE;
 				}else{
 					$nb_pages=ceil($nb_conf/NB_CONF_PAGE);
@@ -115,7 +115,7 @@ if(is_install()){
 					$trie="ASC";
 				}
 				//On selectionne si on choisi une date
-				if(isset($_POST['selection_date']) && $_POST['selection_date']!=""){
+				if(isset($_POST['selection_date']) && $_POST['selection_date']!==""){
 					$liste_conf=listerConf($connex,NB_CONF_PAGE,$id*NB_CONF_PAGE,$_POST['selection_date'],$trie);
 				}else{
 					$resultats=listerConf($connex,NB_CONF_PAGE,$id*NB_CONF_PAGE,"0",$trie);

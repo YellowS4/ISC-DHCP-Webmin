@@ -36,7 +36,7 @@
 	}
 	else{
 	  $tmp=explode('.',$addr);// on estime que c'est une notation décimal pointée, on sépare donc chaque octet.
-	  if(count($tmp)!=4){ //si il n'y a pas 4 éléments dans le tableau
+	  if(count($tmp)!==4){ //si il n'y a pas 4 éléments dans le tableau
 	    $addri=false;
 	    break;
 	  }

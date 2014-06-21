@@ -99,9 +99,6 @@
 	case 'static':
 		include_once 'inc/static.php';
 		break;
-	case 'nouvelle_plage':
-		include_once 'inc/add_plage.php';
-		break;
 	case 'modif_conf':
 		include_once 'inc/modif_conf.php';
 		break;
