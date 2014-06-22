@@ -1,7 +1,9 @@
-﻿
+
 <article>
 <?php
-//Projet 34 - AUDON Florian - B1 
+////////////////////////////////////
+//Projet 34 - AUDON Florian - B1  //
+////////////////////////////////////
 
 //Includes
 require_once 'inc/fonctionsBDD.php';
@@ -29,7 +31,10 @@ if(is_install()){
 		$id="";
 	}
 	$manquant="";
-
+		if(isset($_POST['supprimer']) && $_POST['supprimer']==="supprimer"){
+			echo 'configuration supprimé';
+			rmConf_id($connex,$_POST['conf']);
+		}
 		if(isset($_POST['ajouter']) && $_POST['ajouter']==="Ajouter"){ //On ajoute la nouvelle configuration
 			$erreur="";//Pour mettre des erreurs
     		echo '<h3>Ajout d\'une configuration</h3>';
@@ -45,7 +50,7 @@ if(is_install()){
 				}
 			}
 			if(isset($erreur) && $erreur!==""){
-				echo 'erreur:'.$erreur;
+				printErrors(Array($erreur));
 			}else{				
 				echo 'Ajout effectué avec succès';
 				$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
@@ -57,7 +62,7 @@ if(is_install()){
 			echo '<h3>Modification d\'une configuration</h3>';
 			if(!isset($_POST['contenuconf'])  || $_POST['contenuconf']==="" ||  !isset($_POST['createur']) || $_POST['createur']===""  || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$manquant="veuillez remplir tous les champs";
-				echo $manquant;
+				printErrors(Array($manquant));
 			}else{
 				$erreur="";//Si toutesfois il y a des erreurs
 				if($_POST['actuelle']==="true"){
@@ -72,7 +77,7 @@ if(is_install()){
 					}
 				}
 				if(isset($erreur) && $erreur!==""){
-					echo $erreur;
+					printErrors(Array($erreur));
 				}else{
 					echo 'modification effectué avec succès';
 					$resultats=$connex->exec("UPDATE projet34_configurations  SET contenuconf='".$_POST['contenuconf']."', createurconf=1 WHERE idconf='".$_POST['id']."'; ");
@@ -144,6 +149,7 @@ if(is_install()){
 						Appliquer la configuration (cela remplaçera la configuration actuelle):  <label>Oui<input type="radio" name="actuelle" value="true"></label>  <label>Non: <input type="radio" name="actuelle" value="false" checked="checked"></label><br />
 						<input type="submit" value="Ajouter" name="ajouter">
 						<input type="submit" value="Modifier" name="modifier">
+						<input type="submit" value="supprimer" name="supprimer">
 					</form>	
 				<?php
 				}
@@ -168,7 +174,7 @@ if(is_install()){
 				//FIN ESSAI DE PAGINATION
 				}
 			}else{
-				echo 'Aucune configuration disponnible';
+				printErrors(Array("Aucune configuration disponnible"));
 			}
 			print '<form method="POST" action=""><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
 		}else{
@@ -180,10 +186,10 @@ if(is_install()){
 						foreach($liste_conf as $ligne){
 							print '<option value="'.$ligne['idconf'].'">'.substr($ligne['creation'],'0','19').'('.$ligne['nomuser'].')</option>'."\n";
 						}
-						print '</select><input type="submit" name="afficher_une_conf" value="ok"> </form>';
+						print '</select><input type="submit" name="afficher_une_conf" value="ok">  <input type="submit" name="supprimer" value="supprimer"></form>';
 				print '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Affichage détaillé"> </form>';
 			}else{
-				echo 'Aucune configuration disponnible';
+				printErrors(Array("Aucune configuration disponnible"));
 			}
 		}
 }else{
