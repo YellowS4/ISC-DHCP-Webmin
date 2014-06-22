@@ -1,0 +1,38 @@
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+Cmnd_Alias	APT_INSTALL_DHCP = /usr/bin/apt-get install isc-dhcp-server
+Cmnd_Alias	APT_UNINSTALL_DHCP = /usr/bin/apt-get remove --purge isc-dhcp-server
+Cmnd_Alias	MKDIR_DHCP_BACKUP = /bin/mkdir /etc/dhcp/backup/
+Cmnd_Alias	CP_CONF_BACKUP = /bin/cp /etc/dhcp/dhcpd.conf /etc/dhcp/backup/dhcpd*.conf
+Cmnd_Alias	RM_CONF_BACKUP = /bin/rm /etc/dhcp/backup/ -r
+Cmnd_Alias	CHECK_DHCP = /usr/sbin/dhcpd -t -cf /tmp/dhcpd.conf
+Cmnd_Alias	CP_CONF = /bin/cp /tmp/dhcpd.conf /etc/dhcp/dhcpd.conf
+Cmnd_Alias	RIGHTS_FILE = /bin/chmod 777 /etc/default/isc-dhcp-server
+Cmnd_Alias	START_SRV = /etc/init.d/isc-dhcp-server start
+Cmnd_Alias	STOP_SRV  = /etc/init.d/isc-dhcp-server stop
+
+# User privilege specification
+root	ALL=(ALL:ALL) ALL
+www-data ALL=(ALL) ALL, NOPASSWD: APT_INSTALL_DHCP,APT_UNINSTALL_DHCP, MKDIR_DHCP_BACKUP, CP_CONF_BACKUP, RM_CONF_BACKUP, WRITE_CONF, CHECK_DHCP, CP_CONF, RIGHTS_FILE, START_SRV, STOP_SRV
+# Allow members of group sudo to execute any command
+%sudo	ALL=(ALL:ALL) ALL
+
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+ 
