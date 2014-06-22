@@ -3,8 +3,6 @@
 if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
   require_once 'inc/network.php';
   require_once 'inc/fonctions_generales.php';
-  require_once 'inc/fonctionsBDD.php';
-  $connex=connexionBDD();
   echo '<h3>Résultat de la génération de la plage</h3>';
   $error=Array();
   // verification des entrées
@@ -72,7 +70,6 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
       else $errors[]='le nom de domaine n\'est pas valide';
     }
     $rule.="}\n";
-    $resultats=addConf($connex,$rule,$_SESSION['id']);
     echo '<pre>',$rule,'</pre>';
     if(count($error)>0) printErrors($error);
     echo 'Le bouton appliquer remplacera la configuration actuelle par celle ci-dessus :

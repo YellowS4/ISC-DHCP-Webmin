@@ -1,6 +1,7 @@
 <article class="info">
 <?php
   if($_SESSION['grade']>1){
+    require_once 'inc/fonctionsBDD.php';
     require_once 'inc/appliquer_conf.php';
     $conf="
 		default-lease-time 600;\n
@@ -17,7 +18,10 @@
     if($res!==NULL) echo '<span class="error">
 	    Impossible d\'appliquer la configuration<br>
 	    Erreur du serveur:',$res,'</span>';
-    else echo 'L\'application de la configuration s\'est bien déroulée.';
+    else{
+      echo 'L\'application de la configuration s\'est bien déroulée.';
+      $resultats=addConf(ConnexionBDD(),$conf,$_SESSION['id']);
+      }
   }
  else echo 'Vous n\'êtes pas assez gradé pour accèder à cette page!';
 ?>
