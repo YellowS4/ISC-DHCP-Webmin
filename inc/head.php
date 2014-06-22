@@ -27,12 +27,13 @@
 				  if($_SESSION['grade']>1){
 					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'">Générer une déclaration de subnet</a><br>';
 					echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
+				    echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_int"'),'>Modification des interfaces d\'écoute</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
 					echo '<a ';
 					if($page==='active'||$page==='desactive')	echo 'id="current"';
 					else{
-						$active=is_activate();
+						$active=is_run();
 						echo 'href="index.php?page=',($active?'desactive"':'active" '),'>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
 					}
 					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';

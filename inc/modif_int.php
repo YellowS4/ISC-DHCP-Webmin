@@ -5,14 +5,18 @@
 	if(is_install()){
 	if(isset($_POST['valider']) && $_POST['valider']==="Valider"){
 		if(isset($_POST['interface']) && $_POST['interface']!="Array()"){
+		
 			$interfaces="";
 			foreach($_POST['interface'] as $interface){
 				$interfaces.=" ,".$interface;//On concatene tous
 				
 			}
-			$interfaces = substr($interfaces,2);;//On supprime la premiere virgule
-			shell_exec("echo \"INTERFACES=\\\"".$interface."\\\"\">/etc/default/isc-dhcp-server 2>&1");
-			
+			$interfaces = substr($interfaces,2);//On supprime la premiere virgule
+
+			echo $interfaces;
+			$sortie=shell_exec("echo \"INTERFACES=\\\"".$interface."\\\"\">/etc/default/isc-dhcp-server 2>&1");
+			//$sortie=shell_exec("echo bonjour >/tmp/test 2>&1");
+			echo $sortie;
 		}
 	}
 ?>

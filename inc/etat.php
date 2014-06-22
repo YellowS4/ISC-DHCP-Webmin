@@ -1,10 +1,15 @@
 <article>
 <?php
 		require 'inc/network.php';
-		if(is_install()){//On verifie que le dhcp est installé
-			echo 'serveur DHCP: Installé <img src="images/vert.png" class="icon"><br />';
+		if(is_run()){//On choisi le logo à affichier si le serveur tourne ou pas
+			$run="vert";
 		}else{
-			echo 'serveur DHCP: Non installé <img src="images/rouge.png" class="icon"><br />';
+			$run="rouge";
+		}
+		if(is_install()){//On verifie que le dhcp est installé
+			echo 'serveur DHCP: Installé <img src="images/vert.png" class="icon"> Lancé <img src="images/'.$run.'.png" class="icon"><br />';
+		}else{
+			echo 'serveur DHCP: Non installé <img src="images/rouge.png" class="icon"> Lancé <img src="images/'.$run.'.png" class="icon"><br />';
 		}
 		echo 'Récapitulatif des interface: <br \>';
 		$interfaces=get_network();
