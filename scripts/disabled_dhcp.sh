@@ -1,0 +1,1 @@
+sudo /etc/init.d/isc-dhcp-server stop

@@ -56,11 +56,11 @@ if(is_install()){
 			}else{
 				$erreur="";//Si toutesfois il y a des erreurs
 				if($_POST['actuelle']==="true"){
-					$resultats=listerConf_actuelle($connex,"true");
-					$donnees=$resultats->fetch();
+					//$resultats=listerConf_actuelle($connex,"true");
+					//$donnees=$resultats->fetch();
 					//$resultats=$connex->exec("UPDATE projet34_configurations  SET conf_actuelle=FALSE WHERE id=".$donnees['id']."; ");	
 					$verif=appliquer_conf($_POST['contenuconf']);
-					if($verif!==""){
+					if($verif!=""){
 						$erreur.="Erreur dans la configuration: ".$verif."\n";
 					}else{
 						echo "Configuration appliqué ";

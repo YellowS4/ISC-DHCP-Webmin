@@ -32,7 +32,7 @@
 					echo '<a ';
 					if($page==='active'||$page==='desactive')	echo 'id="current"';
 					else{
-						$active=is_activate();
+						$active=is_run();
 						echo 'href="index.php?page=',($active?'desactive"':'active" '),'>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
 					}
 					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
