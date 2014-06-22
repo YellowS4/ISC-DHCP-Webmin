@@ -27,7 +27,7 @@
 				  if($_SESSION['grade']>1){
 					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'">Générer une déclaration de subnet</a><br>';
 					echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
-				    echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_int"'),'>Modification des interfaces d\'écoute</a><br>';
+				    echo '<a ',(($page==='modif_int')?'id="current"':'href="index.php?page=modif_int"'),'>Modification des interfaces d\'écoute</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
 					echo '<a ';
@@ -38,7 +38,7 @@
 					}
 					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
 					echo '<hr>';
-					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=lister_utilisateurs"'),'>Gérer les utilisateurs</a><br>';
+					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=utilisateurs"'),'>Gérer les utilisateurs</a><br>';
 				  }
 				}
 				else if($_SESSION['grade']>2){
