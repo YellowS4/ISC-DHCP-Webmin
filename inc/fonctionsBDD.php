@@ -2,6 +2,11 @@
 /*
  * Code par Florian Audon
  */
+
+/**
+ * [connexionBDD Connexion à la base de données]
+ * @return [PDOOBJECT] [retourne la connexion à la BDD]
+ **/
 function connexionBDD(){
 	$connexion=NULL;
 	
@@ -25,7 +30,15 @@ function connexionBDD(){
 	return $connexion;
 
 }
-
+/**
+ * [listerConf Lister les configurations de la BDD]
+ * @param  [PDOOBJECT] $connex  [Connexion retourné par connexionBDD()]
+ * @param  string $limit      	[Facultatif - début de la selection]
+ * @param  string $offset 		[Facultatif - fin de la selection]
+ * @param  string $date   		[Facultatif - selectionne les resultats avant une certaines dates]
+ * @param  string $trie   		[Facultatif - trie par ordre decroissant ou croissant]
+ * @return [type] $resultats    [retourne les resultats de la BDD]
+ */
 function listerConf($connex,$limit="0", $offset="0",$date="0",$trie="ASC"){
 	if($limit==="0" && $offset==="0"){//On doit tout affichier
 		if($date==="0"){
@@ -52,12 +65,17 @@ function listerConf($connex,$limit="0", $offset="0",$date="0",$trie="ASC"){
 	return $resultats;
 }
 
+/**
+ * [listerConf_id description]
+ * @param  [type] $connex 		   [Connexion retourné par connexionBDD()]
+ * @param  [type] $id    		   [retourne la conf avec cette id]
+ * @return [type]  $resutats       [description]
+ */
 function listerConf_id($connex, $id){
 	$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser FROM dhcp_test WHERE id=? ORDER BY creation;");
 	$resultats->execute(Array($id));
 	return $resultats;
 }
-
 
 /*
  * Code par Jason Gantner

@@ -1,4 +1,9 @@
 <?php
+////////////////////////////////////
+//Projet 34 - AUDON Florian - B1  //
+////////////////////////////////////
+
+
 /**
  * Permet de savoir si le serveur est activé ou non
  *	@return true si le serveur est active et false sinon
