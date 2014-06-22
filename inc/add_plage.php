@@ -48,7 +48,7 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
     printErrors($error);
   }
   else{
-    echo 'Veuillez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
+    echo 'Vous pouvez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
     $rule='subnet '.$subnet.' netmask '. int2decPointIP($maski)." {\n";
     $rule.="\trange ".$debut.' '.$fin.";\n";
     if ($_POST['check_routers']==='on'){
@@ -72,6 +72,11 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
     $rule.="}\n";
     echo '<pre>',$rule,'</pre>';
     if(count($error)>0) printErrors($error);
+    echo 'Le bouton appliquer remplacera la configuration actuelle par celle ci-dessus :
+    <form action="?page=plage&apply" method="POST" id="next">
+      <input type="hidden" name="conf" value="',$rule,'">
+      <input type="submit" value="Appliquer">
+    </form>';
   }
 }
 else echo '<span class="error">Vous n\'êtes pas assez gradé pour accèder à cette partie du site!</span>';

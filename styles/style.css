@@ -99,14 +99,17 @@ article{
   border-radius:5px;
   background-color:#222222;
 }
-
+article.info{
+  border-color:white;
+  text-align:center;
+}
 
 h3{
   text-decoration:underline;
-  margin:0.2em;
+  margin:0.2em 0;
 }
 
-span.error{
+.error{
   color:red;
   font-weight: bold;
 }
@@ -120,6 +123,35 @@ input:not(:focus):invalid{
 fieldset {
   padding:0.5em;
 }
+
+table {
+  width:95%;
+  margin-left:2.5%;
+  border-radius:0.5em;
+  border-collapse:collapse;
+}
+
+thead, tbody {
+  border: 1px solid white;
+  border-collapse:collapse;
+}
+
+th, td {
+  text-align:center;
+  border:1px solid white;
+  border-collapse:collapse;
+  padding:0.2em;
+}
+div#navigation{
+  width:100%;
+  text-align:center;
+}
+
+div#navigation form{ display:inline-block; }
+
+#prev{ float:left; }
+
+#next{ float:right; } 
 
 #footer{
   border-top: 2px solid #888888;

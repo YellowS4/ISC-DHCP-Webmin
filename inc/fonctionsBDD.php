@@ -1,8 +1,12 @@
 <?php
+/*
+ * Code par Florian Audon
+ */
+
 /**
  * [connexionBDD Connexion à la base de données]
  * @return [PDOOBJECT] [retourne la connexion à la BDD]
- */
+ **/
 function connexionBDD(){
 	$connexion=NULL;
 	
@@ -10,7 +14,7 @@ function connexionBDD(){
 	$PARAM_port='5432';
 	$PARAM_nom_bd='projet34'; // le nom de votre base de données
 	$PARAM_utilisateur='projet34'; // nom d'utilisateur pour se connecter
-	$PARAM_mot_passe='GXnyxX'; // mot de passe de l'utilisateur pour se connecter
+	$PARAM_mot_passe='SuperSecurePass'; // mot de passe de l'utilisateur pour se connecter
 	
 	try
 	{
@@ -73,22 +77,59 @@ function listerConf_id($connex, $id){
 	return $resultats;
 }
 
+/*
+ * Code par Jason Gantner
+ */
 function getHash($connex,$user){
-  $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
+  $req=$connex->prepare('SELECT h1 FROM projet34_users WHERE login=? AND actif=true;');
   $req->execute(Array($user));
   return $req->fetch();
 }
 
 function getUser($connex,$user){
-  $req=$connex->prepare("SELECT * FROM projet34_users WHERE login=?");
+  $req=$connex->prepare('SELECT * FROM projet34_users WHERE login=?;');
   $req->execute(Array($user));
   return $req->fetch();
 }
 
 function getUsers($connex,$nombre,$offset){
-  $req=$connex->prepare("SELECT * FROM projet34_users LIMIT ? OFFSET ?");
+  $req=$connex->prepare('SELECT * FROM projet34_users ORDER BY actif DESC LIMIT ? OFFSET ?;');
   $req->execute(Array($nombre,$offset));
   return $req->fetchAll();
+}
+
+function totalUsers($connex){
+  $res=$connex->prepare('SELECT COUNT(idUser) AS total FROM projet34_users;');
+  //ne fonctionne pas avec query, je tente avec prepare execute fetch
+  $res->execute();
+  $res=$res->fetch()['total'];
+  settype($res,'integer');
+  return $res;
+}
+
+function changeActif($connex,$id,$actif){
+  $req=$connex->prepare('UPDATE projet34_users SET actif=? WHERE idUser=?;');
+  return $req->execute(Array($actif,$id));
+}
+
+function changeGrade($connex,$id,$grade){
+  $req=$connex->prepare('UPDATE projet34_users SET refGrade=? WHERE idUser=?;');
+  return $req->execute(Array($grade,$id));
+}
+
+function changeMail($connex,$id,$mail){
+  $req=$connex->prepare('UPDATE projet34_users SET email=? WHERE idUser=?;');
+  return $req->execute(Array($mail,$id));
+}
+
+function addUser($connex,$name,$login,$mail,$h1,$grade,$actif){
+  $req=$connex->prepare('INSERT INTO projet34_users (nomuser,login,email,h1,refgrade,actif) VALUES (?,?,?,?,?,?);');
+  return $req->execute(Array($name,$login,$mail,$h1,$grade,$actif));
+}
+
+function rmUser($connex,$id){
+  $req=$connex->prepare('DELETE FROM projet34_users WHERE iduser=?;');
+  return $req->execute(Array($id));
 }
 
 ?>
