@@ -120,4 +120,7 @@
 			value="valider">
 	</form>
 </article>
-<?php if(isset($_GET['generate'])) include 'inc/add_plage.php'; ?>
+<?php 
+  if(isset($_GET['generate'])) include 'inc/add_plage.php';
+  if(isset($_GET['apply'])) include 'inc/apply_plage.php';
+?>
