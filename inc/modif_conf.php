@@ -90,9 +90,6 @@ if(is_install()){
 				</form>	
 				<?php
 		}elseif((isset($_POST['afficher_tout']) && ($_POST['afficher_tout']==="Affichage détaillé" || $_POST['afficher_tout']==="Retour")) || (isset($_GET['id']) && $_GET['id']!=="" && !isset($_POST['affichage_simple'])) || (isset($_POST['selectionner']) && $_POST['selectionner']==="selectionner") || (isset($_POST['trie']) && $_POST['trie']==="trié")){
-			//Tri
-			print 'Afficher seulement:<form method="POST" class="liste_conf"> Les configuration de l\'utilisateur: Après la date:<input type="date" name="selection_date"><input type="submit" value="selectionner" name="selectionner">';
-			print 'Trié par date <select name="trie_date"><option value="ASC">Croissant</option><option value="DESC">Descroissant</option></select><input type="submit" value="trié" name="trie"><br /></form>';
 			
 			//On prends le nombre de configuration pour la pagination
 			if(isset($_POST['selection_date']) && $_POST['selection_date']!==""){
@@ -101,6 +98,10 @@ if(is_install()){
 				$liste_conf=listerConf($connex);
 			}
 			if($liste_conf->rowCount()!==0){
+				//Tri
+				print 'Afficher seulement:<form method="POST" class="liste_conf"> Les configuration de l\'utilisateur: Après la date:<input type="date" name="selection_date"><input type="submit" value="selectionner" name="selectionner">';
+				print 'Trié par date <select name="trie_date"><option value="ASC">Croissant</option><option value="DESC">Descroissant</option></select><input type="submit" value="trié" name="trie"><br /></form>';
+			
 				$nb_conf=$liste_conf->rowCount();
 				//On calcule le nombre de page
 				if($nb_conf%NB_CONF_PAGE===0){
@@ -161,17 +162,23 @@ if(is_install()){
 					echo '<a href="?page=modif_conf&id='.($nb_pages-1).'"> >></a>';
 				//FIN ESSAI DE PAGINATION
 				}
+			}else{
+				echo 'Aucune configuration disponnible';
 			}
 			print '<form method="POST" action=""><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
 		}else{
 			$liste_conf=listerConf($connex);
-			print '<form method="POST" action="">';
-			print 'Listes configurations: <select name="conf">';
-					foreach($liste_conf as $ligne){
-						print '<option value="'.$ligne['idconf'].'">'.substr($ligne['creation'],'0','19').'('.$ligne['nomuser'].')</option>'."\n";
-					}
-					print '</select><input type="submit" name="afficher_une_conf" value="ok"> </form>';
-			print '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Affichage détaillé"> </form>';
+			if($liste_conf->rowCount()!==0){
+				print '<form method="POST" action="">';
+				print 'Listes configurations: <select name="conf">';
+						foreach($liste_conf as $ligne){
+							print '<option value="'.$ligne['idconf'].'">'.substr($ligne['creation'],'0','19').'('.$ligne['nomuser'].')</option>'."\n";
+						}
+						print '</select><input type="submit" name="afficher_une_conf" value="ok"> </form>';
+				print '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Affichage détaillé"> </form>';
+			}else{
+				echo 'Aucune configuration disponnible';
+			}
 		}
 }else{
 		printErrors(Array("Le serveur n'est pas installé"));
