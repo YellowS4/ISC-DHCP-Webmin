@@ -1,5 +1,8 @@
-﻿<article>
+﻿
+<article>
 <?php
+//Projet 34 - AUDON Florian - B1 
+
 //Includes
 require_once 'inc/fonctionsBDD.php';
 require_once 'inc/network.php';
@@ -29,6 +32,7 @@ if(is_install()){
 
 		if(isset($_POST['ajouter']) && $_POST['ajouter']==="Ajouter"){ //On ajoute la nouvelle configuration
 			$erreur="";//Pour mettre des erreurs
+    		echo '<h3>Ajout d\'une configuration</h3>';
 			if(!isset($_POST['contenuconf']) || $_POST['contenuconf']==="" || !isset($_POST['createur']) || $_POST['createur']==="" || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$erreur.="veuillez remplir tous les champs";
 				echo $_POST['createur'];
@@ -42,14 +46,15 @@ if(is_install()){
 			}
 			if(isset($erreur) && $erreur!==""){
 				echo 'erreur:'.$erreur;
-			}else{
-				echo 'Ajout effectue';
+			}else{				
+				echo 'Ajout effectué avec succès';
 				$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
 			}
 			echo '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Retour"> </form>';
 			
 			
 		}elseif(isset($_POST['modifier']) && $_POST['modifier']==="Modifier"){//Pour modifier une conf
+			echo '<h3>Modification d\'une configuration</h3>';
 			if(!isset($_POST['contenuconf'])  || $_POST['contenuconf']==="" ||  !isset($_POST['createur']) || $_POST['createur']===""  || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$manquant="veuillez remplir tous les champs";
 				echo $manquant;
@@ -69,7 +74,7 @@ if(is_install()){
 				if(isset($erreur) && $erreur!==""){
 					echo $erreur;
 				}else{
-					echo 'modification effectue';
+					echo 'modification effectué avec succès';
 					$resultats=$connex->exec("UPDATE projet34_configurations  SET contenuconf='".$_POST['contenuconf']."', createurconf=1 WHERE idconf='".$_POST['id']."'; ");
 				}
 			}
@@ -167,6 +172,7 @@ if(is_install()){
 			}
 			print '<form method="POST" action=""><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
 		}else{
+   			echo '<h3>Configuration disponnible</h3>';
 			$liste_conf=listerConf($connex);
 			if($liste_conf->rowCount()!==0){
 				print '<form method="POST" action="">';
