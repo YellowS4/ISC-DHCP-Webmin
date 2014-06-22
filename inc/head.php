@@ -27,6 +27,7 @@
 				  if($_SESSION['grade']>1){
 					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'">Générer une déclaration de subnet</a><br>';
 					echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
+				    echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_int"'),'>Modification des interfaces d\'écoute</a><br>';
 				  }
 				  if($_SESSION['grade']>2){
 					echo '<a ';
