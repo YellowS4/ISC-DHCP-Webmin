@@ -1,10 +1,10 @@
 ISC-DHCP-Webmin
 ===============
 
-This is the project of two students to create a web GUI for an isc-dhcp server.
+This is the project of two students to create a web GUI for an isc-dhcp server.<br />
 THIS IS NOT MEANT TO BE USED IN PRODUCTION !
 
-Software used: 
+Software used: <br />
 -Debian 3.2.57 <br />
 -Apache/2.2.22<br />
 -PHP 5.4.4<br />
