@@ -67,7 +67,7 @@ if($_SESSION['grade']>2){
 		case 23505:
 		  printErrors('Plusieurs utilisateurs ont le même login!');
 		default:
-		  printErrors('échec de l\'enregistrement');
+		  printErrors('échec de l\'enregistrement. Code d\'erreur:'.$pe->getCode());
 		}
 	      }
 	  }
@@ -80,7 +80,14 @@ if($_SESSION['grade']>2){
 	    echo 'Suppression effective';
 	  }
 	  catch( PDOException $pe){
-	    printErrors($pe->errorInfo());
+	    switch($pe->getCode()){
+	      case 23503:
+		printErrors('L\'utilisateur ne peux pas être supprimé car des données lui sont rattachées.');
+		break;
+	      default:
+		printErrors('Echec de la suppression de l\'utilisateur. Code d\'erreur:'.$pe->getCode());
+		break;
+	    }
 	  }
 	  break;
 	default:
