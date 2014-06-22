@@ -88,7 +88,7 @@ function rmConf_id($connex, $id){
 	return $resultats;
 }
 /**
- * [addConf description]
+ * addConf Ajoute une configuration
  * @param  PDOOBJECT $connex   Connexion retourné par connexionBDD()
  * @param  String    $contenu  Contenu de la configuration
  * @param  Integer   $createur Id du createur de la configuration
