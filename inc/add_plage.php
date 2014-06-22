@@ -51,19 +51,19 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
     echo 'Vous pouvez ajouter ou remplacer ceci dans la configuration actuelle du serveur:<br>';
     $rule='subnet '.$subnet.' netmask '. int2decPointIP($maski)." {\n";
     $rule.="\trange ".$debut.' '.$fin.";\n";
-    if ($_POST['check_routers']==='on'){
+    if(isset($_POST['check_routers']))if ($_POST['check_routers']==='on'){
       if(preg_match($regIP4,$_POST['routeur']) /*&& addr_in_subnet($_POST['routeur'],$subnet,$maski) /**/){
 	$rule.="\toption routeurs ".$_POST['routeur'].";\n";
       }
       else $error[]='l\'adresse du routeur n\'est pas valide';
     }
-    if($_POST['check_domain']==='on'){
+    if(isset($_POST['check_DNS']))if($_POST['check_DNS']==='on'){
       if(preg_match('@(\h*,?\h*([0-2]?[0-9]{1,2}\.){3}[0-2]?[0-9]{1,2}\h*,?\h*)+\h*@',$_POST['DNS'],$DNS)){
 	$rule.="\toption domain-name-servers ".$DNS[1].";\n";
       }
       else $error[]='l\'adresse du serveur de noms n\'est pas valide';
     }
-    if($_POST['check_domain']==='on'){
+    if(isset($_POST['check_domain']))if($_POST['check_domain']==='on'){
       if(preg_match('@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*@',$_POST['domain'],$matches)){
 	$rule.="\toption domain-name ".$matches[0].";\n";
       }
