@@ -1,4 +1,7 @@
 <?php
+/*
+ * Code par Florian Audon
+ */
 function connexionBDD(){
 	$connexion=NULL;
 	
@@ -56,23 +59,50 @@ function listerConf_id($connex, $id){
 }
 
 
-
+/*
+ * Code par Jason Gantner
+ */
 function getHash($connex,$user){
-  $req=$connex->prepare("SELECT h1 FROM projet34_users WHERE login=?");
+  $req=$connex->prepare('SELECT h1 FROM projet34_users WHERE login=? AND actif=true;');
   $req->execute(Array($user));
   return $req->fetch();
 }
 
 function getUser($connex,$user){
-  $req=$connex->prepare("SELECT * FROM projet34_users WHERE login=?");
+  $req=$connex->prepare('SELECT * FROM projet34_users WHERE login=?;');
   $req->execute(Array($user));
   return $req->fetch();
 }
 
 function getUsers($connex,$nombre,$offset){
-  $req=$connex->prepare("SELECT * FROM projet34_users LIMIT ? OFFSET ?");
+  $req=$connex->prepare('SELECT * FROM projet34_users ORDER BY actif DESC LIMIT ? OFFSET ?;');
   $req->execute(Array($nombre,$offset));
   return $req->fetchAll();
+}
+
+function totalUsers($connex){
+  $res=$connex->query('SELECT COUNT(idUser) AS total FROM projet34_users;');
+  return $res-fetch()['total'];
+}
+
+function changeActif($connex,$id,$actif){
+  $req=$connex->prepare('UPDATE projet34_users SET actif=? WHERE idUser=?;');
+  return $req->execute(Array($actif,$id));
+}
+
+function changeGrade($connex,$id,$grade){
+  $req=$connex->prepare('UPDATE projet34_users SET refGrade=? WHERE idUser=?;');
+  return $req->execute(Array($grade,$id));
+}
+
+function changeMail($connex,$id,$mail){
+  $req=$connex->prepare('UPDATE projet34_users SET email=? WHERE idUser=?;');
+  return $req->execute(Array($mail,$id));
+}
+
+function addUser($connex,$name,$login,$mail,$h1,$grade,$actif){
+  $req=$connex->prepare('INSERT INTO projet34_users (nomuser,login,email,h1,refgrade,actif) VALUES (?,?,?,?,?,?);');
+  return $req->execute(Array($name,$login,$mail,$h1,$grade,$actif));
 }
 
 ?>
