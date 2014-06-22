@@ -13,7 +13,7 @@ require_once 'inc/dhcp.php';
 if(is_install()){
 	$connex=connexionBDD();
 	//Constantes
-	/** NB_CONF_PAGE définit le nombre d'element par page **/
+	/** NB_CONF_PAGE définit le nombre d'element par page */
 	define("NB_CONF_PAGE",2);
 	$nw=get_network();
 	//On securise la variable ID
