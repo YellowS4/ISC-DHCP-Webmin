@@ -20,8 +20,8 @@ This is the project of two students to create a web GUI for an isc-dhcp server.
 *  **PHP-openssl** _5.5_ needed for pseudo random bytes generatir
 *  **PHP-PDO** _5.5_ needed to connect to the database
 *  **PHP-PDO-pgsql** _5.5_ needed since we use PostgreSQL and PDO
-*  **PHP-session** _5.5_ needed for 
-*  **PHP-fpm** _5.5_ needed to execute PHP scripts, could be executed by apache but what's the point?
+*  **PHP-session** _5.5_ needed to use sessions (obviously)
+*  **PHP-fpm** _5.5_ needed to execute PHP scripts, could be executed by apache but what's the point in using two HTTP servers when one would suffice?
 
 ### For **apache** installation ( _tested version_ ):
 *  **apache** _2.2.22_ HTTP server
