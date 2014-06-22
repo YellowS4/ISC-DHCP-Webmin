@@ -99,11 +99,14 @@ article{
   border-radius:5px;
   background-color:#222222;
 }
-
+article.info{
+  border-color:white;
+  text-align:center;
+}
 
 h3{
   text-decoration:underline;
-  margin:0.2em;
+  margin:0.2em 0;
 }
 
 .error{
@@ -139,7 +142,16 @@ th, td {
   border-collapse:collapse;
   padding:0.2em;
 }
+div#navigation{
+  width:100%;
+  text-align:center;
+}
 
+div#navigation form{ display:inline-block; }
+
+#prev{ float:left; }
+
+#next{ float:right; } 
 
 #footer{
   border-top: 2px solid #888888;

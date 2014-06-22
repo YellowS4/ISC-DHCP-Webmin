@@ -1,4 +1,4 @@
-<article>
+<article class="info">
 <?php
   if($_SESSION['grade']>1){
     require_once 'inc/appliquer_conf.php';

@@ -1,5 +1,7 @@
+<article class="info">
 <?php
-switch($_GET['update']){
+if($_SESSION['grade']>2){
+  switch($_GET['update']){
 	case 'etat':
 	  if($_POST['actif']==='true'||$_POST['actif']==='false'){
 	    settype($_POST['id'],'integer');
@@ -71,9 +73,21 @@ switch($_GET['update']){
 	  }
 	  else printErrors($errors);
 	  break;
+	case 'rmuser':
+	  settype($_POST['id'],'integer');
+	  try{
+	    rmUser(ConnexionBDD(),$_POST['id']);
+	    echo 'Suppression effective';
+	  }
+	  catch( PDOException $pe){
+	    printErrors($pe->errorInfo());
+	  }
+	  break;
 	default:
 	  echo 'Cette action n\'est pas disponible';
 	  break;
       }
-      echo '</article><article>';
+    }
+  else echo '<span class="error">Vou n\'êtes pas assez gradé pour accèder à cette page!</span>';
 ?>
+</article>

@@ -9,7 +9,7 @@ function connexionBDD(){
 	$PARAM_port='5432';
 	$PARAM_nom_bd='projet34'; // le nom de votre base de données
 	$PARAM_utilisateur='projet34'; // nom d'utilisateur pour se connecter
-	$PARAM_mot_passe='GXnyxX'; // mot de passe de l'utilisateur pour se connecter
+	$PARAM_mot_passe='SuperSecurePass'; // mot de passe de l'utilisateur pour se connecter
 	
 	try
 	{
@@ -81,8 +81,12 @@ function getUsers($connex,$nombre,$offset){
 }
 
 function totalUsers($connex){
-  $res=$connex->query('SELECT COUNT(idUser) AS total FROM projet34_users;');
-  return $res-fetch()['total'];
+  $res=$connex->prepare('SELECT COUNT(idUser) AS total FROM projet34_users;');
+  //ne fonctionne pas avec query, je tente avec prepare execute fetch
+  $res->execute();
+  $res=$res->fetch()['total'];
+  settype($res,'integer');
+  return $res;
 }
 
 function changeActif($connex,$id,$actif){
@@ -103,6 +107,11 @@ function changeMail($connex,$id,$mail){
 function addUser($connex,$name,$login,$mail,$h1,$grade,$actif){
   $req=$connex->prepare('INSERT INTO projet34_users (nomuser,login,email,h1,refgrade,actif) VALUES (?,?,?,?,?,?);');
   return $req->execute(Array($name,$login,$mail,$h1,$grade,$actif));
+}
+
+function rmUser($connex,$id){
+  $req=$connex->prepare('DELETE FROM projet34_users WHERE iduser=?;');
+  return $req->execute(Array($id));
 }
 
 ?>
