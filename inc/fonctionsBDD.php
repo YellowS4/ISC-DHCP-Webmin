@@ -31,13 +31,13 @@ function connexionBDD(){
 
 }
 /**
- * [listerConf Lister les configurations de la BDD]
- * @param  [PDOOBJECT] $connex  [Connexion retourné par connexionBDD()]
- * @param  string $limit      	[Facultatif - début de la selection]
- * @param  string $offset 		[Facultatif - fin de la selection]
- * @param  string $date   		[Facultatif - selectionne les resultats avant une certaines dates]
- * @param  string $trie   		[Facultatif - trie par ordre decroissant ou croissant]
- * @return [type] $resultats    [retourne les resultats de la BDD]
+ * listerConf Lister les configurations de la BDD
+ * @param  PDOOBJECT $connex    Connexion retourné par connexionBDD()
+ * @param  string $limit      	Facultatif - début de la selection
+ * @param  string $offset 		Facultatif - fin de la selection
+ * @param  string $date   		Facultatif - selectionne les resultats avant une certaines dates
+ * @param  string $trie   		Facultatif - trie par ordre decroissant ou croissant
+ * @return Array $resultats     Retourne les resultats de la BDD
  */
 function listerConf($connex,$limit="0", $offset="0",$date="0",$trie="ASC"){
 	if($limit==="0" && $offset==="0"){//On doit tout affichier
@@ -66,15 +66,37 @@ function listerConf($connex,$limit="0", $offset="0",$date="0",$trie="ASC"){
 }
 
 /**
- * [listerConf_id description]
- * @param  [type] $connex 		   [Connexion retourné par connexionBDD()]
- * @param  [type] $id    		   [retourne la conf avec cette id]
- * @return [type]  $resutats       [description]
+ * listerConf_id recupere les informations d'une configuration de la BDD avec un id donné
+ * @param  PDOOBJECT $connex 	 Connexion retourné par connexionBDD()
+ * @param  Integer $id    		 Retourne la conf avec cette id
+ * @return Array $resutats       Retourne le résultats de la BDD
  */
 function listerConf_id($connex, $id){
-	$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser FROM dhcp_test WHERE id=? ORDER BY creation;");
+	$resultats=$connex->prepare("SELECT idconf ,contenuconf,createurconf,creation,nomuser   FROM projet34_configurations INNER JOIN projet34_users ON createurconf=iduser WHERE idconf=? ORDER BY creation;");
 	$resultats->execute(Array($id));
 	return $resultats;
+}
+/**
+ * rmConf_id supprime une configuration de la BDD avec un id donné
+ * @param   PDOOBJECT $connex     Connexion retourné par connexionBDD()
+ * @param   integer   $id         valeur de l'id de la configuration à supprimer
+ * @return  Array     $resultats  
+ */
+function rmConf_id($connex, $id){
+	$resultats=$connex->prepare("DELETE  FROM projet34_configurations  WHERE idconf=?;");
+	$resultats->execute(Array($id));
+	return $resultats;
+}
+/**
+ * [addConf description]
+ * @param  PDOOBJECT $connex   Connexion retourné par connexionBDD()
+ * @param  String    $contenu  Contenu de la configuration
+ * @param  Integer   $createur Id du createur de la configuration
+ */
+function addConf($connex, $contenu, $createur){
+	//$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
+	$req=$connex->prepare('INSERT INTO projet34_configurations (contenuconf,createurconf) VALUES (?,?);');
+    return $req->execute(Array($contenu,$createur));
 }
 
 /*

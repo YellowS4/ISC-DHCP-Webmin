@@ -3,8 +3,10 @@
 if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
   require_once 'inc/network.php';
   require_once 'inc/fonctions_generales.php';
-    echo '<h3>Résultat de la génération de la plage</h3>';
-    $error=Array();
+  require_once 'inc/fonctionsBDD.php';
+  $connex=connexionBDD();
+  echo '<h3>Résultat de la génération de la plage</h3>';
+  $error=Array();
   // verification des entrées
   $all_good = true;//variable pour savoir si il y a des erreurs ou pas
   if( isset($_POST['subnet']) && isset($_POST['debut']) && isset($_POST['fin']) && isset($_POST['mask']) ){
@@ -70,6 +72,7 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
       else $errors[]='le nom de domaine n\'est pas valide';
     }
     $rule.="}\n";
+    $resultats=addConf($connex,$rule,$_SESSION['id']);
     echo '<pre>',$rule,'</pre>';
     if(count($error)>0) printErrors($error);
     echo 'Le bouton appliquer remplacera la configuration actuelle par celle ci-dessus :

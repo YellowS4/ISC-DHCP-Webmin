@@ -13,7 +13,8 @@ require_once 'inc/dhcp.php';
 if(is_install()){
 	$connex=connexionBDD();
 	//Constantes
-	define("NB_CONF_PAGE","2");
+	/** NB_CONF_PAGE définit le nombre d'element par page **/
+	define("NB_CONF_PAGE",2);
 	$nw=get_network();
 	//On securise la variable ID
 	foreach($_POST as $indice=>$valeur){//On securise les valeurs en mettant par défaut une chaine
@@ -40,7 +41,7 @@ if(is_install()){
     		echo '<h3>Ajout d\'une configuration</h3>';
 			if(!isset($_POST['contenuconf']) || $_POST['contenuconf']==="" || !isset($_POST['createur']) || $_POST['createur']==="" || !isset($_POST['actuelle']) || $_POST['actuelle']===""){ //On verifie tous les parametre
 				$erreur.="veuillez remplir tous les champs";
-				echo $_POST['createur'];
+				echo $_SESSION['id'];
 			}else{
 				if($_POST['actuelle']==="true"){//Si il existe déjà une conf actuelle on la met en false
 					//a del $resultats=listerConf_actuelle($connex,"true");
@@ -53,7 +54,8 @@ if(is_install()){
 				printErrors(Array($erreur));
 			}else{				
 				echo 'Ajout effectué avec succès';
-				$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
+				$resultats=addConf($connex,$_POST['contenuconf'],$_SESSION['id']);
+				//$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
 			}
 			echo '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Retour"> </form>';
 			
@@ -90,7 +92,7 @@ if(is_install()){
 			$row=$conf->fetch();
 			?>
 			<form method="POST" action=""> 
-					<input type="hidden" name="id" value="<?php echo $row['id'];?>">
+					<input type="hidden" name="conf" value="<?php echo $row['id'];?>">
 					<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </span></label><textarea name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />	  
 					<label class="aligner">Propriétaire de la configuration: </label><input type="text" name="nom" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
 					<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):<label>  Oui</label> <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']==="true"){ echo ' checked="checked"';} ?>></label> <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!=="true"){ echo ' checked="checked"';} ?>></label><br />
@@ -131,10 +133,7 @@ if(is_install()){
 				}else{
 					$resultats=listerConf($connex,NB_CONF_PAGE,$id*NB_CONF_PAGE,"0",$trie);
 				}
-				//Permet de choisir (avec js)
-				//print 'Afficher seulement: <label>Tous <input type="checkbox" id="selection_conf" name="affichage[]" value="Tous" onclick="selection(\'conf\')" checked="checked"></label> <label>La configuration par defaut <input type="checkbox" id="selection_default" name="affichage[]" value="Configuration_d?faut" onclick="selection(\'default\')"></label> <label>La configuration actuelle <input type="checkbox" id="selection_actuelle" name="affichage[]" value="Configuration_actuelle" onclick="selection(\'actuelle\')"></label> Concernant les interfaces:.... <br />';
-				
-				echo $manquant;
+
 				//$i=0;
 				foreach ($resultats as $row) {	
 				
