@@ -4,20 +4,31 @@
 	$nw=get_network();
 	if(is_install()){
 	if(isset($_POST['valider']) && $_POST['valider']==="Valider"){
-		if(isset($_POST['interface']) && $_POST['interface']!="Array()"){
+		
+		
 		
 			$interfaces="";
-			foreach($_POST['interface'] as $interface){
-				$interfaces.=" ,".$interface;//On concatene tous
-				
+			if(isset($_POST['interface'])){//On autorise vide si on veux mettre aucune interface
+				foreach($_POST['interface'] as $interface){
+					$valide=false;
+					//On parcours toutes les interfaces
+					foreach ($nw as $nom_inter => $categories ) {//On boucle pour extraire toutes les interfaces $key= les nom des interfaces
+						if($nom_inter===$interface){
+							$valide=true;
+						}								
+					} 
+					if($valide){//Si c'est valide c'est bon
+						$interfaces.=" ,".$interface;//On concatene tous
+					}
+					
+				}
 			}
 			$interfaces = substr($interfaces,2);//On supprime la premiere virgule
 
-			echo $interfaces;
-			$sortie=shell_exec("echo \"INTERFACES=\\\"".$interface."\\\"\">/etc/default/isc-dhcp-server 2>&1");
+			$sortie=shell_exec("echo \"INTERFACES=\\\"".$interfaces."\\\"\">/etc/default/isc-dhcp-server 2>&1");
 			//$sortie=shell_exec("echo bonjour >/tmp/test 2>&1");
 			echo $sortie;
-		}
+		
 	}
 ?>
 
