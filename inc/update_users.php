@@ -56,8 +56,18 @@ switch($_GET['update']){
 	    $actif='false';
 	  }
 	  if($all_good){
-	    if(addUser(ConnexionBDD(),$nom,$login,$mail,$hash,$grade,$actif)) echo 'Utilisateur ',$login,' créé.';
-	    else printErrors('échec de l\'enregistrement');
+	    try{
+	      addUser(ConnexionBDD(),$nom,$login,$mail,$hash,$grade,$actif);
+	      echo 'Utilisateur ',$login,' créé.';
+	    }
+	    catch(PDOException $pe){
+	      switch($pe->getCode()){
+		case 23505:
+		  printErrors('Plusieurs utilisateurs ont le même login!');
+		default:
+		  printErrors('échec de l\'enregistrement');
+		}
+	      }
 	  }
 	  else printErrors($errors);
 	  break;

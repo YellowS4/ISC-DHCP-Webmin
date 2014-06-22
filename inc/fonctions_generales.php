@@ -34,7 +34,7 @@ function printErrors($errors){
       echo 'il n\'y a pas eu d\'erreurs.';
       break;
     case 1:
-      echo 'Erreur:',$errors[0],'<br>';
+      echo '<span class="error">Erreur:',$errors[0],'</span><br>';
       //on sépare les éléments à afficher avec une virgule, plus rapide que de les concaténer
       break;
     default:
