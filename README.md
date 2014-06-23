@@ -5,7 +5,6 @@ This is the project of two students to create a web GUI for an isc-dhcp server.
 
 ## Required to run
 *  **aptitude** used to install/deinstall isc-dhcp-server and check status of the installation
-*  **cat** to open **/etc/resolv.conf** to find out who the name servers are
 *  **Debian** _7(Wheezy)_ _kernel: linux 3.2.57_
 *  **ifconfig** used
 *  **netstat** used to get knowledge of the routeur on the network
