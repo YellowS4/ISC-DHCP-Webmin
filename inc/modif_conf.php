@@ -56,7 +56,6 @@ if($_SESSION['grade']>1){
 				}else{				
 					echo 'Ajout effectué avec succès';
 					$resultats=addConf($connex,$_POST['contenuconf'],$_SESSION['id']);
-					//$resultats=$connex->exec("INSERT INTO projet34_configurations  (contenuconf,createurconf) VALUES ('".$_POST['contenuconf']."',1); ");
 				}
 				echo '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Retour"> </form>';
 				
@@ -80,7 +79,7 @@ if($_SESSION['grade']>1){
 						printErrors(Array($erreur));
 					}else{
 						echo 'modification effectué avec succès';
-						$resultats=$connex->exec("UPDATE projet34_configurations  SET contenuconf='".$_POST['contenuconf']."', createurconf=1 WHERE idconf='".$_POST['id']."'; ");
+						$resultats=$connex->exec("UPDATE projet34_configurations  SET contenuconf='".$_POST['contenuconf']."', createurconf=".$_SESSION['id']." WHERE idconf=".$_POST['conf']."; ");
 					}
 				}
 				echo '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Retour"> </form>';		
@@ -88,13 +87,14 @@ if($_SESSION['grade']>1){
 				$conf=listerConf_id($connex,$_POST['conf']);
 				$row=$conf->fetch();//On affiche qu'une conf
 				?>
-				<form method="POST"> 
-						<input type="hidden" name="conf" value="<?php echo $row['id'];?>">
+				<form method="POST" class="conf"> 
+						<input type="hidden" name="conf" value="<?php echo $row['idconf'];?>">
 						<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </span></label><textarea name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />	  
-						<label class="aligner">Propriétaire de la configuration: </label><input type="text" name="nom" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
-						<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):</label>  <label>Oui<input type="radio" name="actuelle" value="true"> </label><label>Non: <input type="radio" name="actuelle" value="false"></label><br />
+						<label class="aligner">Propriétaire de la configuration: </label><input type="text" name="createur" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
+						ppliquer la configuration (cela remplaçera la configuration actuelle):<label>Oui<input type="radio" name="actuelle" value="true"> </label><label>Non: <input type="radio" name="actuelle" value="false" checked="checked"></label><br />
 						<input type="submit" value="Ajouter" name="ajouter">
 						<input type="submit" value="Modifier" name="modifier">
+						<?php if($_SESSION['grade']>2){ echo '<input type="submit" value="supprimer" name="supprimer">';}?>
 						<input type="submit" value="retour" name="affichage_simple">
 					</form>	
 					<?php
@@ -139,13 +139,13 @@ if($_SESSION['grade']>1){
 					?>
 					
 						<form method="POST" class="conf"> 
-							<input type="hidden" name="id" value="<?php echo $row['idconf'];?>">
+							<input type="hidden" name="conf" value="<?php echo $row['idconf'];?>">
 							<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </label></span><textarea class="form" name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />				  
 							<label class="aligner">Propriétaire de la configuration: </label><input type="text" class="form" name="createur" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
 							Appliquer la configuration (cela remplaçera la configuration actuelle):  <label>Oui<input type="radio" name="actuelle" value="true"></label>  <label>Non: <input type="radio" name="actuelle" value="false" checked="checked"></label><br />
 							<input type="submit" value="Ajouter" name="ajouter">
 							<input type="submit" value="Modifier" name="modifier">
-							<input type="submit" value="supprimer" name="supprimer">
+							<?php if($_SESSION['grade']>2){ echo '<input type="submit" value="supprimer" name="supprimer">';}?>
 						</form>	
 					<?php
 					}
