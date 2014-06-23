@@ -15,12 +15,13 @@
 	 * serveur et on les enregistre dans $nw
 	 */
 	?>
-	<form name="plage" method="POST" action="index.php?page=plage&generate">
+	<form name="plage" method="POST" action="index.php?page=plage&amp;generate">
 		<p>
 			<span>Subnet :</span> 
 			<select name='subnet'>
 				<?php
 				foreach(Array_keys($nw) as $if){
+				  if(isset($nw[$if]['IPv4_subnet']))
 				  foreach( $nw[$if]['IPv4_subnet'] as $subnet ){
 				    /*
 				     * Pour chaque interface, si elle est sur un subnet particulier on 
@@ -94,7 +95,7 @@
 			Serveurs de noms :
 			<input type="text" name="DNS" list="nslist"
 				placeholder="ex:8.8.8.8, 8.8.4.4, 10.100.100.20"
-				pattern="([\,\h]*((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\,\h]*"><br>
+				pattern="[\,\h]*((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[\,\h]*"><br>
 			<datalist id="nslist">
 				<?php
 				foreach(get_ns() as $ns){

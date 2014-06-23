@@ -126,7 +126,6 @@ function get_ns(){
     //on lit le fichier resolv.conf pour obtenir les DNS
     if(preg_match('@nameserver\h(((25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))@',$line,$matches)){
       $NS[]=$matches[1];
-      print_r($matches);
     }
   }
   return $NS;
