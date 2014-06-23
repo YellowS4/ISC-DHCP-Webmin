@@ -1,19 +1,17 @@
 ﻿<article>
 <?php
+if($_SESSION['grade']>1){
 	include 'inc/network.php';
 	$nw=get_network();
 	if(is_install()){
-	if(isset($_POST['valider']) && $_POST['valider']==="Valider"){
-		
-		
-		
+	if(isset($_POST['valider']) && $_POST['valider']==="Valider"){		
 			$interfaces="";
 			if(isset($_POST['interface'])){//On autorise vide si on veux mettre aucune interface
 				foreach($_POST['interface'] as $interface){
 					$valide=false;
 					//On parcours toutes les interfaces
 					foreach ($nw as $nom_inter => $categories ) {//On boucle pour extraire toutes les interfaces $key= les nom des interfaces
-						if($nom_inter===$interface){
+						if($nom_inter===$interface){//On verifie que c'est bien une interface que l'on ajoute
 							$valide=true;
 						}								
 					} 
@@ -30,6 +28,9 @@
 			echo $sortie;
 		
 	}
+}else{
+	printErrors(Array("Vous n'avez pas un grade suffisant"));
+}
 ?>
 
 	Modification des interfaces d'écoutes

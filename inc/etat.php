@@ -1,5 +1,6 @@
 <article>
 <?php
+	if($_SESSION['grade']>0){
 		require 'inc/network.php';
 		if(is_run()){//On choisi le logo à affichier si le serveur tourne ou pas
 			$run="vert";
@@ -32,6 +33,8 @@
 			}
 			
 		}
-		
+	}else{
+		printErrors(Array("Vous n'avez pas un grade suffisant"));
+	}	
 ?>
 </article>
