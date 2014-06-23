@@ -119,6 +119,7 @@ function get_network(){
   return $interfaces;
 }
 
+//fonction pour obtenir les serveurs de noms du resolv.conf
 function get_ns(){
   $NS=Array();
   foreach(preg_split('@\r\n|\n@',file_get_contents('/etc/resolv.conf')) as $line){
@@ -138,11 +139,16 @@ function addr_in_subnet($addr,$subnet,$mask){
     $addr = IP2int($addr);
     $subnet = IP2int($subnet);
     $mask = IP2int($mask);
-    if($addr===false) echo 'L\'adresse n\'as pas pu être transformée en int<br>';
-    if($subnet===false) echo 'Le subnet n\'as pas pu être transformé';
-    if($addr && $subnet && !($mask===false)){
-      return ($addr & $mask === $subnet & $mask);
-    }
-    else{return 'error';}
+    //on vérifie qu'il n'y ai pas d'erreur de conversion
+    if($addr && $subnet && $mask!==false)return (dechex($addr & $mask)===dechex($subnet & $mask));
+    //on utilise une conversion en hexadécimal car il y a un bug sans elle
+    else{
+      $errors=Array();
+      if($addr===false)$errors[]='L\'adresse n\'as pas pu être transformée en int<br>';
+      if($subnet===false)$errors[]='Le subnet n\'as pas pu être transformé';
+      if($mask===false)$errors[]='Le masque n\'as pas pu être transformé';
+      return $errors;
+    };
+    
   }
 ?>
