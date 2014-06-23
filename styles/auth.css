@@ -15,7 +15,7 @@ form{
   padding: 4em 1em;
   text-align: center;
   display: inline-block;
-  border: 1px rgb(38, 114, 32) solid;
+  border: 1px black solid;
   box-shadow: 0em 0em 1em blueviolet;
   margin-top:10%;
 }
