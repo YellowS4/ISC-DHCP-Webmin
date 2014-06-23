@@ -17,12 +17,14 @@
     else $NBUsersParPage=10; //valeur par défaut si non fourni
     $conn=ConnexionBDD(); // on se connecte à la base de données
     $maxPages=floor(totalUsers($conn)/$NBUsersParPage); // on calcule le noumbre de pages
-    if(isset($_GET['npage']))if($_GET['npage']>=0&&$_GET['npage']<=$maxPages){
-     //on récupère le numéro de la page demandée si compris entre 0 et le nombre max
-      $NPage=$_GET['npage'];
-      settype($NPage,'integer');
+    if(isset($_GET['npage'])){
+	    if($_GET['npage']>=0&&$_GET['npage']<=$maxPages){
+	      //on récupère le numéro de la page demandée si compris entre 0 et le nombre max
+	      $NPage=$_GET['npage'];
+	      settype($NPage,'integer');
+ 	 	}
     }
-    else $NPage=0;// valeur par défaut si non fournie
+    else {$NPage=0;}// valeur par défaut si non fournie
     echo '<h3>Liste des Utilisateurs</h3>
 	  <form action="index.php" method="GET" id="prev">
 	    <input type="hidden" name="page" value="utilisateurs">
