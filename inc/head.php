@@ -8,6 +8,7 @@
 		<meta name="viewport" content="initial-scale=0.5, user-scalable=yes, maximum-scale=1.0">
 		<title>DHCP ADMIN</title>
 		<link type="text/css" rel="stylesheet" href="styles/style.css">
+		<script type="text/javascript" src="scripts/chargement.js"></script>
 		<?php 
 			  if($page==="plage") echo '<script  src="scripts/plage.js"></script>';
 			  if($page==="modif_conf") echo '<script  src="scripts/modif_conf.js"></script>';
@@ -34,15 +35,15 @@
 					if($page==='active'||$page==='desactive')	echo 'id="current"';
 					else{
 						$active=is_run();
-						echo 'href="index.php?page=',($active?'desactive"':'active" '),'>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
+						echo 'href="index.php?page=',($active?'desactive"':'active" '),' onclick="chargement">',($active?'Désactivation':'Activation'),' du serveur</a><br>';
 					}
-					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
+					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),' onclick="chargement()">Désinstallation du serveur</a><br>';
 					echo '<hr>';
 					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=utilisateurs"'),'>Gérer les utilisateurs</a><br>';
 				  }
 				}
 				else if($_SESSION['grade']>2){
-				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','>Installation du serveur</a><br>';
+				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','onclick="chargement()">Installation du serveur</a><br>';
 				  }
 				?>
 				<a href="index.php?page=deco">Déconnexion</a><br>
