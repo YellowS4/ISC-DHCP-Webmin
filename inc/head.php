@@ -12,12 +12,11 @@
 		<?php
 			  if($page==='plage') echo '<script  src="scripts/plage.js"></script>';
 			  if($page==='modif_conf') echo '<script  src="scripts/modif_conf.js"></script>';
-		?>
 	</head>
 	<body lang="fr">
 		<div id="left">
 			<header>
-			  <img src="images/logo.png">
+			  <img src="images/logo.png" alt="logo">
 			</header>
 			<nav>
 				<?php 
@@ -31,7 +30,7 @@
 					echo '<a ',(($page==='etat')?'id="current"':'href="index.php?page=etat"'),'>État du serveur</a><br>';
 				  }
 				  if($_SESSION['grade']>1){
-					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'">Générer une déclaration de subnet</a><br>';
+					echo '<a ',(($page==='plage')?'id="current"':'href="index.php?page=plage"'),'>Générer une déclaration de subnet</a><br>';
 					echo '<a ',(($page==='modif_conf')?'id="current"':'href="index.php?page=modif_conf"'),'>Modification d\'une configuration</a><br>';
 				    echo '<a ',(($page==='modif_int')?'id="current"':'href="index.php?page=modif_int"'),'>Modification des interfaces d\'écoute</a><br>';
 				  }
