@@ -102,6 +102,9 @@
 	case 'modif_conf':
 		include_once 'inc/modif_conf.php';
 		break;
+	case 'modif_int':
+		include_once 'inc/modif_int.php';
+		break
 	case 'etat':
 		include_once 'inc/etat.php';
 		break;
