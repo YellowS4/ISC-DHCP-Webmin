@@ -95,6 +95,6 @@ if($_SESSION['grade']>2){
 	  break;
       }
     }
-  else echo '<span class="error">Vou n\'êtes pas assez gradé pour accèder à cette page!</span>';
+  else echo '<span class="error">Vous n\'êtes pas assez gradé pour accèder à cette page!</span>';
 ?>
 </article>
