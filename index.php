@@ -104,7 +104,7 @@
 		break;
 	case 'modif_int':
 		include_once 'inc/modif_int.php';
-		break
+		break;
 	case 'etat':
 		include_once 'inc/etat.php';
 		break;
