@@ -116,9 +116,6 @@
 	case 'active':
 		include_once 'inc/active.php';
 		break;
-	case 'modif_int':
-		include_once 'inc/modif_int.php';
-		break;
 	case 'desinstall':
 		include_once 'inc/desinstall.php';
 		break;
