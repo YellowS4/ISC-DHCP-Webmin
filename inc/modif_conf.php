@@ -68,10 +68,7 @@ if($_SESSION['grade']>1){
 					printErrors(Array($manquant));
 				}else{
 					$erreur="";//Si toutesfois il y a des erreurs
-					if($_POST['actuelle']==="true"){
-						//$resultats=listerConf_actuelle($connex,"true");
-						//$donnees=$resultats->fetch();
-						//$resultats=$connex->exec("UPDATE projet34_configurations  SET conf_actuelle=FALSE WHERE id=".$donnees['id']."; ");	
+					if($_POST['actuelle']==="true"){//Si on veut la passer en configuration actuelle
 						$verif=appliquer_conf($_POST['contenuconf']);
 						if($verif!=""){
 							$erreur.="Erreur dans la configuration: ".$verif."\n";
@@ -79,7 +76,7 @@ if($_SESSION['grade']>1){
 							echo "Configuration appliqué ";
 						}
 					}
-					if(isset($erreur) && $erreur!==""){
+					if(isset($erreur) && $erreur!==""){//Si il y a des erreur
 						printErrors(Array($erreur));
 					}else{
 						echo 'modification effectué avec succès';
@@ -88,9 +85,8 @@ if($_SESSION['grade']>1){
 				}
 				echo '<form method="POST" action="index.php?page=modif_conf"><input type="submit" name="afficher_tout" value="Retour"> </form>';		
 			}elseif(isset($_POST['afficher_une_conf']) && $_POST['afficher_une_conf']==="ok"){//Pour afficher qu'une seul conf depuis l'affichage simple
-				//$conf=$connex->query("SELECT id,contenuconf, interface, nom_conf, creation, conf_default, conf_actuelle FROM projet34_configurations  WHERE id=".$_POST['conf'].";");
 				$conf=listerConf_id($connex,$_POST['conf']);
-				$row=$conf->fetch();
+				$row=$conf->fetch();//On affiche qu'une conf
 				?>
 				<form method="POST" action=""> 
 						<input type="hidden" name="conf" value="<?php echo $row['id'];?>">
@@ -110,7 +106,7 @@ if($_SESSION['grade']>1){
 				}else{
 					$liste_conf=listerConf($connex);
 				}
-				if($liste_conf->rowCount()!==0){
+				if($liste_conf->rowCount()!==0){//Si il n'y a aucune configuration disponnible on affiche un message
 					//Tri
 					print 'Afficher seulement:<form method="POST" class="liste_conf"> Les configuration de l\'utilisateur: Après la date:<input type="date" name="selection_date"><input type="submit" value="selectionner" name="selectionner">';
 					print 'Trié par date <select name="trie_date"><option value="ASC">Croissant</option><option value="DESC">Descroissant</option></select><input type="submit" value="trié" name="trie"><br /></form>';
@@ -154,7 +150,6 @@ if($_SESSION['grade']>1){
 					<?php
 					}
 					
-					//ESSAI DE PAGINATION
 					//On definit les pages a afficher
 					if($nb_pages>=2 && $nb_pages<=4){//Si il n'y a pas beaucoup de pages
 					
@@ -170,7 +165,6 @@ if($_SESSION['grade']>1){
 							echo '<a href="?page=modif_conf&id='.$i.'">'.$i.'</a>';
 						}
 						echo '<a href="?page=modif_conf&id='.($nb_pages-1).'"> >></a>';
-					//FIN ESSAI DE PAGINATION
 					}
 				}else{
 					printErrors(Array("Aucune configuration disponnible"));
@@ -179,7 +173,7 @@ if($_SESSION['grade']>1){
 			}else{
 	   			echo '<h3>Configuration disponnible</h3>';
 				$liste_conf=listerConf($connex);
-				if($liste_conf->rowCount()!==0){
+				if($liste_conf->rowCount()!==0){//On regarde si il y a des configurations à afficher
 					print '<form method="POST" action="">';
 					print 'Listes configurations: <select name="conf">';
 							foreach($liste_conf as $ligne){

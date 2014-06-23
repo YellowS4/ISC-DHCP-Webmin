@@ -5,16 +5,22 @@
 require_once 'inc/fonctionsBDD.php';
 $connex=connexionBDD();
 if($_SESSION['grade']>2){
-	if(is_install()){
-		if(!is_run()){
+	?>
+	<article>
+	<?php
+	if(is_install()){//Si le serveur n'est pas installé
+		if(!is_run()){//Si le serveur n'est pas lancé
 			
 			$liste_conf=listerConf($connex);
-			if($liste_conf->rowCount()!==0){
+			if($liste_conf->rowCount()!==0){//Si il y a aucune configuration
 				// On active le serveur DHCP
-				echo 'Serveur DHCP activé';
 				$active=shell_exec("scripts/enable_dhcp.sh 2>&1");
-				//echo $active;
-				header('Location: index.php');
+				if(preg_match("/failed/",$active,$matches)){//On regarde si il y a une erreur
+					printErrors(Array($active));
+				}
+				else{//Sinon on redirige vers l'état
+					header('Location: index.php');
+				}
 			}else{
 				printErrors(Array("Le serveur ne peut être activé, il n'y a aucune configuration."));
 			}
@@ -28,3 +34,4 @@ if($_SESSION['grade']>2){
 	printErrors(Array("Vous n'avez pas un grade suffisant"));
 }
 ?>
+</article>
