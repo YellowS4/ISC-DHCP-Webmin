@@ -59,7 +59,7 @@
       }
     }
     else{
-      if(!isset($_POST['pseudo']) && !isset($_POST['pass']) && !isset($_POST['challenge2']))redir('auth.php');//si aucun champ n'est rempli (cas où on le cookie de session a été volé et que l'inde)
+      if(!isset($_POST['pseudo']) && !isset($_POST['pass']) && !isset($_POST['challenge2']))redir('auth.php');//si aucun champ n'est rempli (cas où on le cookie de session a été volé par exemple)
       else redir('auth.php','Tous les champs ne sont pas remplis!');
     }
   }
