@@ -4,19 +4,25 @@
 ?>
 <article>
 <?php
-  if(isset($_SESSION['grade'])&& $_SESSION['grade']>2){
+  if(isset($_SESSION['grade']))if($_SESSION['grade']>2){
+    /*
+     * Si la personne as un grade suffisament élevé on affiche la page
+     * sinon on affiche un message d'erreur.
+     */
     if(isset($_GET['nbuppage'])&&$_GET['nbuppage']>0){
+      // on récupère le nombre max d'utilisateurs par page si supérieur à zéro
       $NBUsersParPage=$_GET['nbuppage'];
       settype($NBUsersParPage,'integer');
     }
-    else $NBUsersParPage=10;
-    $conn=ConnexionBDD();
-    $maxPages=floor(totalUsers($conn)/$NBUsersParPage);
-    if(isset($_GET['npage'])&&$_GET['npage']>=0&&$_GET['npage']<=$maxPages){
+    else $NBUsersParPage=10; //valeur par défaut si non fourni
+    $conn=ConnexionBDD(); // on se connecte à la base de données
+    $maxPages=floor(totalUsers($conn)/$NBUsersParPage); // on calcule le noumbre de pages
+    if(isset($_GET['npage']))if($_GET['npage']>=0&&$_GET['npage']<=$maxPages){
+     //on récupère le numéro de la page demandée si compris entre 0 et le nombre max
       $NPage=$_GET['npage'];
       settype($NPage,'integer');
     }
-    else $NPage=0;
+    else $NPage=0;// valeur par défaut si non fournie
     echo '<h3>Liste des Utilisateurs</h3>
 	  <form action="index.php" method="GET" id="prev">
 	    <input type="hidden" name="page" value="utilisateurs">
@@ -38,6 +44,7 @@
 	    </thead>
 	    <tbody>';//on affiche le haut du tableau
     foreach(getUsers($conn,$NBUsersParPage,$NPage*$NBUsersParPage) as $user){
+      // pour chaque utilisateur on affiche  une ligne du tableau
       echo '<tr>',
 	'<td>',$user['nomuser'],'</td>',
 	'<td>',$user['login'],'</td>',
@@ -83,37 +90,23 @@
 	    <input type="hidden" name="npage" value="',$NPage-1,'">
 	    <input type="hidden" name="nbuppage" value="',$NBUsersParPage,'">
 	    <input type="submit" value="Page précédente">
-	  </form>';
+	  </form>';// si on n'est pas sur la première page, on affiche le bouton page précédente.
     echo '<form action="index.php" method="GET">
 	    <input type="hidden" name="page" value="utilisateurs">
 	    Page :
 	    <input type="number" name="npage" value="',$NPage,'" min="0" max="',$maxPages,'">/',$maxPages,'
 	    <input type="hidden" name="nbuppage" value="',$NBUsersParPage,'">
 	    <input type="submit" value="Aller">
-	  </form>';
+	  </form>';// input pour selectionner la page désirée
     if($NPage<$maxPages) echo '<form action="index.php" method="GET" id="next">
 	    <input type="hidden" name="page" value="utilisateurs">
 	    <input type="hidden" name="npage" value="',$NPage+1,'">
 	    <input type="hidden" name="nbuppage" value="',$NBUsersParPage,'">
 	    <input type="submit" value="Page suivante">
-	  </form>';
+	  </form>';//si on est pas sur la dernière page, on affiche le bonton page suivante.
     echo '</div>';
   }
   else echo '<span class="error">Vous n\'êtes pas assez gradé pour accèder à cette partie du site!</span>';
 ?>
 </article>
-<article>
-  <h3>Ajouter un utilisateur</h3>
-  <?php 
-    if ($_SERVER['HTTPS'] !== "on") echo '<span class="error"> Pour des raisons de sécurité, n\'ajoutez pas d\'utilisateur par cette interface si vous n\'êtes pas connecté via HTTPS!</span>';
-  ?>
-  <form id="adduser" method="POST" action="?page=utilisateurs&nbuppage=<?php echo $NBUsersParPage;?>&npage=<?php echo $NPage?>&update=user">
-    Nom : <input type="text" name="nom" placeholder="Nom"><br>
-    Login : <input type="text" name="pseudo" placeholder="pseudonyme"><br>
-    Courriel : <input type="email" name="mail" placeholder="user@domain.tld"> <br>
-    Mot de Passe : <input type="password" name="pass"><br>
-    Grade :<input type="number" name="grade" value=0 min="0" max="3"><br>
-    Autorisation de se connecter : <input type="checkbox" name="actif" checked="checked"><br>
-    <input type="reset" value="Effacer">&nbsp;<input type="submit" value="Ajouter">
-  </form>
-</article>
+<?php include_once('inc/add_user.php');// on inclue l'article ajout d'utilisateur?>
