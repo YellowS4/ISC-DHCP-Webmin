@@ -1,8 +1,8 @@
+<?php //code par Jason Gantner ?>
+<!DOCTYPE html>
 <!--
  Code par Florian Audon & Jason Gantner
 -->
-<?php //code par Jason Gantner ?>
-<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -41,7 +41,7 @@
 					if($page==='active'||$page==='desactive')echo 'id="current"';
 					else echo 'href="index.php?page=',($active?'desactive"':'active"');
 					echo '>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
-					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'">Désinstallation du serveur</a><br>';
+					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
 					echo '<hr>';
 					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=utilisateurs"'),'>Gérer les utilisateurs</a><br>';
 				  }
