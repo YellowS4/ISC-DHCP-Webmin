@@ -1,6 +1,7 @@
 <!--
- Code par Jason Gantner
+ Code par Florian Audon & Jason Gantner
 -->
+<?php //code par Jason Gantner ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,7 +9,7 @@
 		<meta name="viewport" content="initial-scale=0.5, user-scalable=yes, maximum-scale=1.0">
 		<title>DHCP ADMIN</title>
 		<link type="text/css" rel="stylesheet" href="styles/style.css">
-		<?php 
+		<?php
 			  if($page==="plage") echo '<script  src="scripts/plage.js"></script>';
 			  if($page==="modif_conf") echo '<script  src="scripts/modif_conf.js"></script>';
 		?>
@@ -21,6 +22,11 @@
 			<nav>
 				<?php 
 				if(is_install()){
+				  /*
+				   * Si le server est installé on affiche le menu complet,
+				   * on affiche les liens selons le grade de l'utilisateur.
+				   * On remplace le href par un id="current" si il s'agit de la page active.
+				   */
 				  if($_SESSION['grade']>0){
 					echo '<a ',(($page==='etat')?'id="current"':'href="index.php?page=etat"'),'>État du serveur</a><br>';
 				  }
