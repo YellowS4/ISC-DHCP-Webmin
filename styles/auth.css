@@ -3,13 +3,14 @@
  * style par Jason Gantner
  */
 body{
-  color:black;
+  color: white;
+  background-color: #9F9DAA;
   text-align:center;
 }
 
 form{
   border-radius: 20%;
-  background: linear-gradient(#2CD125,#1B6B0C);
+  background: linear-gradient(#222222,#333333);
   max-width: 15em;
   padding: 4em 1em;
   text-align: center;
