@@ -49,21 +49,21 @@
 	'<td>',$user['nomuser'],'</td>',
 	'<td>',$user['login'],'</td>',
 	'<td>
-	  <form action="?page=utilisateurs&nbuppage=',$NBUsersParPage,'&npage=',$NPage,'&update=grade" method="POST">
+	  <form action="?page=utilisateurs&amp;nbuppage=',$NBUsersParPage,'&amp;npage=',$NPage,'&amp;update=grade" method="POST">
 	    <input type="number" name="grade" value="',$user['refgrade'],'" min="0" max="3">
 	    <input type="hidden" name="id" value="',$user['iduser'],'">
 	    <input type="submit" value="Modifier">
 	   </form>
 	 </td>
 	 <td>
-	  <form action="?page=utilisateurs&nbuppage=',$NBUsersParPage,'&npage=',$NPage,'&update=mail" method="POST">
+	  <form action="?page=utilisateurs&amp;nbuppage=',$NBUsersParPage,'&amp;npage=',$NPage,'&amp;update=mail" method="POST">
 	    <input type="email" name="email" value="',$user['email'],'">
 	    <input type="hidden" name="id" value="',$user['iduser'],'">
 	    <input type="submit" value="Modifier">
 	   </form>
 	 </td>
 	 <td>
-	  <form action="?page=utilisateurs&nbuppage=',$NBUsersParPage,'&npage=',$NPage,'&update=etat" method="POST">
+	  <form action="?page=utilisateurs&amp;nbuppage=',$NBUsersParPage,'&amp;npage=',$NPage,'&amp;update=etat" method="POST">
 	    <input type="hidden" name="id" value="',$user['iduser'],'">';
 	  if(!$user['actif']){
 	    echo '<input type="hidden" name="actif" value="true">
@@ -76,7 +76,7 @@
 	  echo '</form>
 	      </td>
 	      <td>
-		<form action="?page=utilisateurs&nbuppage=',$NBUsersParPage,'&npage=',$NPage,'&update=rmuser" method="POST">
+		<form action="?page=utilisateurs&amp;nbuppage=',$NBUsersParPage,'&amp;npage=',$NPage,'&amp;update=rmuser" method="POST">
 		  <input type="hidden" name="id" value="',$user['iduser'],'">
 		  <input type="submit" value="Supprimer">
 		</form>

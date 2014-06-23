@@ -8,7 +8,7 @@
     echo '<h3>Ajouter un utilisateur</h3>';
     if ($_SERVER['HTTPS'] !== "on") echo '<span class="error"> Pour des raisons de sécurité, n\'ajoutez pas d\'utilisateur par cette interface si vous n\'êtes pas connecté via HTTPS!</span>';
     //on affiche le message d'alerte si le server n'est pas configuré en HTTPS
-    echo '<form id="adduser" method="POST" action="?page=utilisateurs&nbuppage=<?php echo $NBUsersParPage;?>&npage=<?php echo $NPage?>&update=user">
+    echo '<form id="adduser" method="POST" action="?page=utilisateurs&ampnbuppage=',$NBUsersParPage,'&amp;npage=',$NPage,'&amp;update=user">
     Nom : <input type="text" name="nom" placeholder="Nom"><br>
     Login : <input type="text" name="pseudo" placeholder="pseudonyme"><br>
     Courriel : <input type="email" name="mail" placeholder="user@domain.tld"> <br>
