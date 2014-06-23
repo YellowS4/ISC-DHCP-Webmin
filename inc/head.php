@@ -47,7 +47,7 @@
 				  }
 				}
 				else if($_SESSION['grade']>2){
-				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','">Installation du serveur</a><br>';
+				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','>Installation du serveur</a><br>';
 				  }
 				?>
 				<hr>

@@ -8,15 +8,15 @@
 			$run="rouge";
 		}
 		if(is_install()){//On verifie que le dhcp est installé
-			echo 'serveur DHCP: Installé <img src="images/vert.png" class="icon"> Lancé <img src="images/'.$run.'.png" class="icon"><br />';
+			echo 'serveur DHCP: Installé <img src="images/vert.png" class="icon" alt="etat_install"> Lancé <img src="images/'.$run.'.png" class="icon" alt="etat_actif"><br>';
 		}else{
-			echo 'serveur DHCP: Non installé <img src="images/rouge.png" class="icon"> Lancé <img src="images/'.$run.'.png" class="icon"><br />';
+			echo 'serveur DHCP: Non installé <img src="images/rouge.png" class="icon" alt="etat_desinstall"> Lancé <img src="images/'.$run.'.png" class="icon" alt="etat_actif"><br>';
 		}
-		echo 'Récapitulatif des interface: <br \>';
+		echo 'Récapitulatif des interface: <br>';
 		$interfaces=get_network();
 		//print_r($interfaces);
 		foreach ($interfaces as $nom_inter => $categories) {//On boucle pour extraire toutes les interfaces $key= les nom des interfaces
-			echo "<br \> ".$nom_inter.": ";
+			echo "<br> ".$nom_inter.": ";
 			if(is_array($categories) && $categories!=array()){//Si aucune info sur l'interface
 				foreach ($categories as $nom_categories => $info  ) { 
 					foreach ($info as  $value) { //On extrait les info des categories

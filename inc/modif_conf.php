@@ -88,11 +88,11 @@ if($_SESSION['grade']>1){
 				$conf=listerConf_id($connex,$_POST['conf']);
 				$row=$conf->fetch();//On affiche qu'une conf
 				?>
-				<form method="POST" action=""> 
+				<form method="POST"> 
 						<input type="hidden" name="conf" value="<?php echo $row['id'];?>">
 						<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </span></label><textarea name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />	  
 						<label class="aligner">Propriétaire de la configuration: </label><input type="text" name="nom" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
-						<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):<label>  Oui</label> <input type="radio" name="actuelle" value="true" <?php if($row['conf_actuelle']==="true"){ echo ' checked="checked"';} ?>></label> <label>Non: <input type="radio" name="actuelle" value="false"<?php if($row['conf_actuelle']!=="true"){ echo ' checked="checked"';} ?>></label><br />
+						<label class="aligner">Appliquer la configuration (cela remplaçera la configuration actuelle):</label>  <label>Oui<input type="radio" name="actuelle" value="true"> </label><label>Non: <input type="radio" name="actuelle" value="false"></label><br />
 						<input type="submit" value="Ajouter" name="ajouter">
 						<input type="submit" value="Modifier" name="modifier">
 						<input type="submit" value="retour" name="affichage_simple">
@@ -138,7 +138,7 @@ if($_SESSION['grade']>1){
 						
 					?>
 					
-						<form method="POST" action="" class="conf"> 
+						<form method="POST" class="conf"> 
 							<input type="hidden" name="id" value="<?php echo $row['idconf'];?>">
 							<label class="aligner"><span style="vertical-align:top;">fichier dhcpd.conf: </label></span><textarea class="form" name="contenuconf" rows="20" cols="50"><?php echo $row['contenuconf'];?></textarea><br />				  
 							<label class="aligner">Propriétaire de la configuration: </label><input type="text" class="form" name="createur" value="<?php echo $row['nomuser'];?>" readonly="readonly"/><br />
@@ -169,12 +169,12 @@ if($_SESSION['grade']>1){
 				}else{
 					printErrors(Array("Aucune configuration disponnible"));
 				}
-				print '<form method="POST" action=""><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
+				print '<form method="POST"><input type="submit" name="affichage_simple" value="Affichage simple"> </form>';
 			}else{
 	   			echo '<h3>Configuration disponnible</h3>';
 				$liste_conf=listerConf($connex);
 				if($liste_conf->rowCount()!==0){//On regarde si il y a des configurations à afficher
-					print '<form method="POST" action="">';
+					print '<form method="POST">';
 					print 'Listes configurations: <select name="conf">';
 							foreach($liste_conf as $ligne){
 								print '<option value="'.$ligne['idconf'].'">'.substr($ligne['creation'],'0','19').'('.$ligne['nomuser'].')</option>'."\n";
