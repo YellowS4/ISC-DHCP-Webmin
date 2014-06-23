@@ -41,13 +41,13 @@
 					if($page==='active'||$page==='desactive')echo 'id="current"';
 					else echo 'href="index.php?page=',($active?'desactive"':'active"');
 					echo '>',($active?'Désactivation':'Activation'),' du serveur</a><br>';
-					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'">Désinstallation du serveur</a><br>';
+					echo '<a ',(($page==='desintall')?'id="current"':'href="index.php?page=desinstall"'),'>Désinstallation du serveur</a><br>';
 					echo '<hr>';
 					echo '<a ',(($page==='utilisateurs')?'id="current"':'href="index.php?page=utilisateurs"'),'>Gérer les utilisateurs</a><br>';
 				  }
 				}
 				else if($_SESSION['grade']>2){
-				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','">Installation du serveur</a><br>';
+				  echo '<a ',($page==='install')?'id="current"':'href="index.php?page=install"','>Installation du serveur</a><br>';
 				  }
 				?>
 				<hr>
