@@ -12,6 +12,7 @@
 		<?php
 			  if($page==='plage') echo '<script  src="scripts/plage.js"></script>';
 			  if($page==='modif_conf') echo '<script  src="scripts/modif_conf.js"></script>';
+		?>
 	</head>
 	<body lang="fr">
 		<div id="left">
