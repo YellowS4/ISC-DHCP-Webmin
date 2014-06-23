@@ -1,7 +1,7 @@
 <?php
   require_once 'inc/fonctions_generales.php';
   ob_start();// tout les affichages seront d'abord stockés dans un buffer
-  session_start();
+  session_start();//on active l'utilisation de sessions
   if(!(isset($_SESSION['user']) && isset($_SESSION['grade']))){
     /*
      * on estime que l'utilisateur n'est pas connecté si son grade et son
@@ -59,7 +59,8 @@
       }
     }
     else{
-      redir('auth.php','Tous les champs ne sont pas remplis!');
+      if(!isset($_POST['pseudo']) && !isset($_POST['pass']) && !isset($_POST['challenge2']))redir('auth.php');//si aucun champ n'est rempli (cas où on le cookie de session a été volé et que l'inde)
+      else redir('auth.php','Tous les champs ne sont pas remplis!');
     }
   }
   else{
@@ -90,6 +91,7 @@
      */
 	include_once 'inc/head.php';
     switch( $page ){
+	// on inclue l'article demandé ou on affiche un message d'erreur
 	case 'install':
 		include_once 'inc/install.php';
 		break;
@@ -141,6 +143,6 @@
     }
     include_once 'inc/foot.php';
   }
-  session_write_close();
+  session_write_close();//on arrète l'écriture dans la session
   ob_end_flush(); // on vide le buffer
 ?>
