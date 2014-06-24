@@ -19,13 +19,13 @@ if($_SESSION['grade']>1){
 		$nw=get_network();
 		//On securise la variable ID
 		foreach($_POST as $indice=>$valeur){//On securise les valeurs en mettant par défaut une chaine
-			$_POST[$indice]= htmlspecialchars ($valeur,ENT_QUOTES);
-			settype($_POST[$indice], "string");
+			$_POST[$indice]= htmlspecialchars ($valeur,ENT_QUOTES);//On échappe les caractères spéciaux
+			settype($_POST[$indice], "string");//Par défaut tout est en string
 		}
 		if(isset($_POST['conf'])){
 			settype($_POST['conf'],"integer");
 		}
-		if(isset($_GET['id']) && $_GET['id']>=0 && $_GET['id']!==""){//Sinon "" est comme 0
+		if(isset($_GET['id']) && $_GET['id']>=0 && $_GET['id']!==""){//!== Sinon "" est comme 0
 			settype($_GET['id'],"integer");
 			$id=$_GET['id'];
 		}else{
@@ -33,7 +33,7 @@ if($_SESSION['grade']>1){
 			$id="";
 		}
 		$manquant="";
-			if(isset($_POST['supprimer']) && $_POST['supprimer']==="supprimer" && $_SESSION['grade']>2){
+			if(isset($_POST['supprimer']) && $_POST['supprimer']==="supprimer" && $_SESSION['grade']>2){//Si on veut supprimer et que l'on a le bon grade
 				echo 'configuration supprimé';
 				rmConf_id($connex,$_POST['conf']);
 			}

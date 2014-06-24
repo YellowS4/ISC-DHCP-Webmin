@@ -4,8 +4,8 @@
  */
 
 /**
- * [connexionBDD Connexion à la base de données]
- * @return [PDOOBJECT] [retourne la connexion à la BDD]
+ * connexionBDD Connexion à la base de donnée
+ * @return PDOOBJECT retourne la connexion à la BDD
  **/
 function connexionBDD(){
 	$connexion=NULL;
