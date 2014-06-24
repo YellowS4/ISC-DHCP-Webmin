@@ -82,7 +82,7 @@ if(isset($_SESSION['grade']) && $_SESSION['grade']>1){
       }
       else $error[]='l\'adresse du serveur de noms n\'est pas valide';
     }
-    if(isset($_POST['check_domain']))if($_POST['check_domain']==='on'){
+    if($_POST['check_domain']==='on')if(isset($_POST['check_domain'])){
       //si l'option est cochée, on vérifie la variable reçue et on l'ajoute à la conf
       if(preg_match('@[a-z0-9\-\_]+(\.[a-z0-9\-\_]+)*@',$_POST['domain'],$matches)){
 	$rule.="\toption domain-name ".$matches[0].";\n";
